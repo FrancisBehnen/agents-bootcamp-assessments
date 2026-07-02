@@ -1,8 +1,8 @@
 """Record the agent-loop demo as an animated GIF, using only Python + Pillow.
 
-No system tools to install (no vhs, no brew, no ffmpeg). Just:
+No system tools to install (no vhs, no brew, no ffmpeg). Pillow ships with the
+standard setup (`pip install -e .`), so just:
 
-    pip install pillow
     python demo/record_demo.py            # uses a built-in sample transcript
     python demo/record_demo.py --live     # runs the REAL agent (needs your .env)
 

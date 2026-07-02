@@ -17,6 +17,7 @@ dependencies = [
     "python-dotenv>=1.0",    # loads your .env file with API keys
     "requests>=2.31",        # for the fetch_webpage tool
     "beautifulsoup4>=4.12",  # turns HTML pages into readable text
+    "pillow>=10.0",          # renders the demo GIF (see demo/record_demo.py)
 ]
 
 [tool.setuptools]

@@ -41,11 +41,11 @@ That loop, running in the terminal:
 
 </div>
 
-The finished demo agent lives in [`demo/`](demo/). To regenerate the GIF you
-only need Pillow (no system tools like `vhs` or `ffmpeg`):
+The finished demo agent lives in [`demo/`](demo/). To regenerate the GIF, just
+run the recorder (Pillow ships with the standard `pip install -e .`, so there
+are no system tools like `vhs` or `ffmpeg` to install):
 
 ```bash
-pip install pillow
 python demo/record_demo.py
 ```
 

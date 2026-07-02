@@ -14,10 +14,10 @@ a short recording of the agent loop (think, call a tool, answer).
 ## Regenerate the GIF
 
 The GIF is already committed, so you only need this if you want to change it.
-The only requirement is Pillow, which installs with pip (nothing system-wide):
+Pillow (the only requirement) is already installed by the standard setup
+(`pip install -e .`), so there is nothing extra to install:
 
 ```bash
-pip install pillow
 python demo/record_demo.py
 ```
 

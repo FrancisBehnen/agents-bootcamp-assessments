@@ -1,6 +1,6 @@
-"""🏆 Final Assignment — optional starter: the "agents as tools" pattern.
+"""🏆 Final Assignment, optional starter: the "agents as tools" pattern.
 
-This is scaffolding, not a template. Use it, gut it, or ignore it — but if
+This is scaffolding, not a template. Use it, gut it, or ignore it, but if
 you're staring at a blank editor at 10:30, start here.
 
 The pattern: a specialist agent is wrapped in a @tool function, so the
@@ -38,13 +38,13 @@ from harness.tools import (
 # ===========================================================================
 # A specialist gets ONLY the tools and instructions for its own job. That
 # focus is the entire point of splitting agents: small context, sharp
-# behaviour. Note it has no memory and no order tools — not its job.
+# behaviour. Note it has no memory and no order tools, because that is not its job.
 advisor_agent = create_agent(
     model=get_llm(),
     tools=[search_products, get_product_details],
     system_prompt=(
         "You are CoolShop's product advisor. You help customers choose "
-        "products using your search and detail tools — never from memory. "
+        "products using your search and detail tools, never from memory. "
         "Be concrete and honest; if nothing fits, say so. "
         "TODO(team): make this prompt your own (use your day-2 work!)."
     ),
@@ -59,7 +59,7 @@ def ask_advisor(request: str) -> str:
         request: The customer's need, with all relevant details you know
             (budget, use case, preferences).
     """
-    # An agent invoked inside a tool — that's the whole trick. The supervisor
+    # An agent invoked inside a tool: that's the whole trick. The supervisor
     # sees a normal tool; we run a full agent loop behind it.
     result = advisor_agent.invoke({"messages": [{"role": "user", "content": request}]})
     return result["messages"][-1].content
@@ -74,7 +74,7 @@ order_desk_agent = create_agent(
     system_prompt=(
         "You are CoolShop's order desk. You answer questions about orders, "
         "delivery, returns and policies, always grounded in your tools. "
-        "TODO(team): add your complaint-handling instructions here — or load "
+        "TODO(team): add your complaint-handling instructions here, or load "
         "them as a skill, like you did on day 2."
     ),
 )
@@ -92,7 +92,7 @@ def ask_order_desk(request: str) -> str:
 
 
 # ===========================================================================
-# TODO(team): SPECIALIST 3, 4, ... — this is where YOUR ideas go.
+# TODO(team): SPECIALIST 3, 4, ... this is where YOUR ideas go.
 # A complaints agent with the day-2 skills? A comparison agent? An agent
 # with your self-written tool? (Requirement: at least one self-written tool
 # somewhere in the system.)
@@ -109,11 +109,11 @@ supervisor = create_agent(
         "You are CoolShop's customer service coordinator. You talk to the "
         "customer; your specialists (available as tools) do the domain work. "
         "Delegate substantive questions to the right specialist and pass along "
-        "ALL relevant details in your request — specialists cannot see the "
+        "ALL relevant details in your request, because specialists cannot see the "
         "conversation, only what you send them. Combine their answers into "
         "one warm, clear reply.\n\n"
         "TODO(team): memory instructions (when to save/read notes), guardrails, "
-        "escalation rules, tone of voice — you know the drill by now."
+        "escalation rules, tone of voice. You know the drill by now."
     ),
     checkpointer=InMemorySaver(),  # the supervisor holds the conversation memory
 )

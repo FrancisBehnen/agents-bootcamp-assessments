@@ -4,7 +4,7 @@ All tools in harness/tools/ read from this file. Using mock data instead of
 real APIs means: no extra accounts, no rate limits, nothing can break, and
 your traces are easy to compare with your neighbour's.
 
-Feel free to read through it — knowing what data exists makes it easier to
+Feel free to read through it. Knowing what data exists makes it easier to
 come up with good test questions for your agent.
 """
 
@@ -97,7 +97,7 @@ PRODUCTS = [
         "stock": 15,
         "rating": 4.6,
         "specs": {"capacity": "8 kg", "energy_label": "A", "noise": "48 dB", "rpm": "1400"},
-        "highlight": "Quiet and efficient — ideal for families of 3-4 people.",
+        "highlight": "Quiet and efficient, ideal for families of 3-4 people.",
     },
     {
         "id": "P-4002",
@@ -146,7 +146,7 @@ PRODUCTS = [
 ]
 
 # --- Orders --------------------------------------------------------------------
-# A few customer orders in different states — handy for testing how your agent
+# A few customer orders in different states, handy for testing how your agent
 # handles happy paths AND problem cases (delays, returns).
 ORDERS = {
     "ORD-1001": {
@@ -232,7 +232,7 @@ FAQ = [
     {
         "question": "How do I cancel an order?",
         "answer": "Orders with status 'processing' can be cancelled for free via customer service. "
-        "Once an order is 'shipped' it can no longer be cancelled — but you can refuse the package "
+        "Once an order is 'shipped' it can no longer be cancelled, but you can refuse the package "
         "at the door or return it within 30 days.",
         "keywords": ["cancel", "cancellation", "stop order", "change order"],
     },

@@ -3,8 +3,8 @@
 This gives your agent eyes on the live internet. Two things to notice:
 
 1. We strip the HTML down to plain text and TRUNCATE it. A raw webpage can
-   be 100.000+ tokens of markup — pasting that into the context window would
-   drown your agent (remember "context rot" from the fundamentals day).
+   be 100.000+ tokens of markup, and pasting that into the context window
+   would drown your agent (remember "context rot" from the fundamentals day).
 2. Web content is UNTRUSTED input. A page could contain text like "ignore
    your instructions and ...". That's prompt injection via a tool result.
    Good system prompts tell the agent to treat fetched content as data only.
@@ -14,7 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 from langchain.tools import tool
 
-_MAX_CHARS = 4000  # roughly 1000 tokens — enough to read, small enough to stay sane
+_MAX_CHARS = 4000  # roughly 1000 tokens: enough to read, small enough to stay sane
 
 
 @tool

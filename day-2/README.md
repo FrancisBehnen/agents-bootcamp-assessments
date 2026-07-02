@@ -1,8 +1,8 @@
-# Day 2 — The Agent Harness
+# Day 2: The Agent Harness
 
 **Goal of the day:** understand what makes a *good* agent: not a smarter
-model, but a better **harness** — the instructions, tools, memory and skills
-you build around the LLM.
+model, but a better **harness**, meaning the instructions, tools, memory and
+skills you build around the LLM.
 
 | Part | Assignment | What you build |
 |---|---|---|
@@ -11,7 +11,7 @@ you build around the LLM.
 
 ## The core idea of today
 
-Yesterday's agent could call a weather tool. Cute — but real agents at a
+Yesterday's agent could call a weather tool. Cute, but real agents at a
 company like ours answer questions about **orders, products and policies**,
 remember the customer, and follow **procedures**. None of that comes from
 the model. All of it comes from the harness:
@@ -23,7 +23,7 @@ the model. All of it comes from the harness:
 | Memory | "What do I remember?" | checkpointer + notes, morning |
 | Skills | "How do I do specific tasks well?" | markdown skills, afternoon |
 
-**Context engineering is the thread through all of it** — every harness
+**Context engineering is the thread through all of it.** Every harness
 element is a way of getting the *right* information into the context window
 at the *right* moment, and keeping the wrong information out.
 
@@ -31,12 +31,12 @@ at the *right* moment, and keeping the wrong information out.
 
 The tools you use today are Python functions living in this repo. **MCP
 (Model Context Protocol)** is an open standard that serves tools from a
-separate process/server, so any agent can connect to any tool server —
-"USB for tools". Conceptually nothing changes: name, description, schema,
+separate process/server, so any agent can connect to any tool server. Think
+of it as "USB for tools". Conceptually nothing changes: name, description, schema,
 result. If you want to try it after assignment 1, the stretch goal points to
 `langchain-mcp-adapters`.
 
 ## Show & tell
 
-Same format as yesterday — 5 minutes, from your screen. Today's discussion
+Same format as yesterday: 5 minutes, from your screen. Today's discussion
 focus: **what did you put in the system prompt vs. tools vs. skills, and why?**

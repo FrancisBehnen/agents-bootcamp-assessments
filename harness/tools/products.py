@@ -43,7 +43,7 @@ def search_products(query: str) -> str:
     for p in matches:
         stock = f"{p['stock']} in stock" if p["stock"] > 0 else "OUT OF STOCK"
         lines.append(
-            f"- [{p['id']}] {p['name']} — €{p['price']:.2f} — rating {p['rating']}/5 — {stock}"
+            f"- [{p['id']}] {p['name']}, €{p['price']:.2f}, rating {p['rating']}/5, {stock}"
         )
     return "\n".join(lines)
 

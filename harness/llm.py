@@ -1,15 +1,15 @@
 """One helper to get a configured LLM anywhere in the bootcamp.
 
 We do NOT call OpenAI directly. Instead every call goes through Coolblue's
-**AI Service Router** — an OpenAI-compatible endpoint owned by the Virtual
+**AI Service Router**, an OpenAI-compatible endpoint owned by the Virtual
 Agents Platform team that adds failover, shared quota and central auth. For
 your code the difference is tiny: it's the same OpenAI interface, just
 pointed at a different URL with one extra header.
 
 Why a helper?
-1. Convenience — you write `get_llm()` instead of repeating the router
+1. Convenience: you write `get_llm()` instead of repeating the router
    config in every file.
-2. Flexibility — the model is chosen by BOOTCAMP_MODEL in your .env, so the
+2. Flexibility: the model is chosen by BOOTCAMP_MODEL in your .env, so the
    whole class can switch models without touching code.
 """
 
@@ -25,7 +25,7 @@ load_dotenv(_REPO_ROOT / ".env")
 
 # Default model. Must be a fully-pinned ID the router supports (see the
 # supported-models list from the trainers). gpt-4.1-mini is fast + cheap and
-# handles tool calling well — perfect for learning.
+# handles tool calling well, which makes it perfect for learning.
 _DEFAULT_MODEL = "gpt-4.1-mini-2025-04-14"
 
 
@@ -35,7 +35,7 @@ def _require(var: str) -> str:
     if not value:
         raise RuntimeError(
             f"Environment variable {var} is not set.\n"
-            f"→ Copy .env.example to .env and fill in the router details you "
+            f"Copy .env.example to .env and fill in the router details you "
             f"received from the trainers, then run `python check_setup.py`."
         )
     return value
@@ -59,8 +59,9 @@ def get_llm(model: str | None = None, temperature: float = 0.0):
     chosen = model or os.getenv("BOOTCAMP_MODEL", _DEFAULT_MODEL)
 
     # This is the whole router integration. Compare it with a plain OpenAI
-    # setup: only base_url + the "client" header are new. Everything else —
-    # tools, agents, streaming — works exactly as in the LangChain docs.
+    # setup: only base_url + the "client" header are new. Everything else,
+    # including tools, agents, and streaming, works exactly as in the
+    # LangChain docs.
     return ChatOpenAI(
         model=chosen,
         temperature=temperature,

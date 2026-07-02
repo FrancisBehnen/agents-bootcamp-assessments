@@ -80,7 +80,7 @@ print(f"\n  Making one small test call to {model_name} via the AI Service Router
 try:
     llm = get_llm()
     response = llm.invoke("Reply with exactly one word: OK")
-except Exception as exc:  # noqa: BLE001 — we want to show any error to the student
+except Exception as exc:  # noqa: BLE001 (we want to show any error to the student)
     fail(
         f"The router call failed: {exc}",
         "Common causes: wrong API key, wrong clientName (401 Invalid client), "
@@ -94,16 +94,16 @@ api_key = bool(os.getenv("LANGSMITH_API_KEY"))
 project = os.getenv("LANGSMITH_PROJECT", "(default)")
 
 if tracing and api_key:
-    ok(f'LangSmith tracing is ON — project "{project}"')
+    ok(f'LangSmith tracing is ON, project "{project}"')
     print(
         "\n     Your test call above was traced! Go look at it:\n"
         "     → https://smith.langchain.com  (open your project, click the trace)"
     )
 elif tracing and not api_key:
-    warn("LANGSMITH_TRACING=true but LANGSMITH_API_KEY is empty — tracing won't work yet.")
+    warn("LANGSMITH_TRACING=true but LANGSMITH_API_KEY is empty, so tracing won't work yet.")
 else:
     warn(
-        "LangSmith tracing is OFF. You'll want it ON for the bootcamp —\n"
+        "LangSmith tracing is OFF. You'll want it ON for the bootcamp, so\n"
         "     set LANGSMITH_TRACING=true and LANGSMITH_API_KEY in your .env."
     )
 

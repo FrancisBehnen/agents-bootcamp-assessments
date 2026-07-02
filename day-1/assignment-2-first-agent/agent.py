@@ -1,10 +1,10 @@
-"""Day 1 · Assignment 2 — Build your first agent.
+"""Day 1 · Assignment 2: Build your first agent.
 
 An agent = an LLM in a LOOP with TOOLS and a GOAL. This morning YOU decided
 the steps; now the LLM decides them. create_agent() gives you that loop for
 free, so you can focus on the two things that actually shape an agent:
 
-    PART A: the system prompt   (a tool is already wired — you ONLY edit the prompt)
+    PART A: the system prompt   (a tool is already wired, so you ONLY edit the prompt)
     PART B: adding your own tool (write a new tool from scratch)
 
 Run it (from this folder):
@@ -18,13 +18,13 @@ from harness import get_llm
 from harness.tools import calculator, get_weather
 
 # ===========================================================================
-# PART B lives here — but do PART A first!
+# PART B lives here, but do PART A first!
 # ---------------------------------------------------------------------------
 # A tool is just a normal Python function with the @tool decorator and a good
 # docstring. The LLM reads the function name, the docstring and the argument
 # names/types, and decides WHEN to call it. Your code decides WHAT it does.
 
-# ✅ WORKED EXAMPLE — a complete, working tool. Read every line.
+# ✅ WORKED EXAMPLE: a complete, working tool. Read every line.
 @tool
 def count_words(text: str) -> str:
     """Count how many words are in a piece of text.
@@ -36,7 +36,7 @@ def count_words(text: str) -> str:
     return f"That text contains {number_of_words} words."
 
 
-# TODO(you) PART B — write your OWN tool here, from scratch.
+# TODO(you) PART B: write your OWN tool here, from scratch.
 #
 # Spec: a tool that converts an amount in euros to US dollars.
 #       Use a fixed exchange rate of 1 EUR = 1.08 USD.
@@ -44,7 +44,7 @@ def count_words(text: str) -> str:
 # Steps:
 #   1. Copy the shape of count_words above (the @tool line, a def, a docstring).
 #   2. Give it a clear name (e.g. eur_to_usd) and one typed argument (a number).
-#   3. Write a docstring that tells the LLM exactly what it does — this is how
+#   3. Write a docstring that tells the LLM exactly what it does. This is how
 #      the model decides to use it, so make it clear!
 #   4. Return a short, friendly string with the result.
 #   5. Add it to the TOOLS list below (next to count_words).
@@ -53,7 +53,7 @@ def count_words(text: str) -> str:
 
 
 # ===========================================================================
-# PART A — the agent. Start here.
+# PART A: the agent. Start here.
 # ===========================================================================
 
 # TODO(you) PART A: leave this as-is for now. get_weather and calculator are
@@ -62,7 +62,7 @@ def count_words(text: str) -> str:
 TOOLS = [get_weather, calculator]
 
 
-# TODO(you) PART A: write the system prompt — the agent's "job description".
+# TODO(you) PART A: write the system prompt, the agent's "job description".
 # Cover at least:
 #   - who the agent is and what it helps with
 #   - that it should USE its tools instead of guessing (e.g. always use the

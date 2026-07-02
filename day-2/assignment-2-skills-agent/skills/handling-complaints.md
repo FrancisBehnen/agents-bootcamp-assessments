@@ -9,7 +9,7 @@ Use this skill whenever the customer is angry, disappointed, or uses words
 like "ridiculous", "unacceptable", "done with you", or lots of exclamation
 marks.
 
-## Steps — in this exact order
+## Steps, in this exact order
 
 1. **Acknowledge the feeling first.** One genuine sentence, no "but". Never
    open with a solution or an excuse.
@@ -17,7 +17,7 @@ marks.
    saying anything about it. Quote what you actually find ("I see the
    installation team is fully booked"), don't guess.
 3. **Give the honest status + ONE concrete next step.** What will happen and
-   when. No vague promises ("as soon as possible") — use the dates from the
+   when. No vague promises ("as soon as possible"); use the dates from the
    order data.
 4. **Offer a fallback.** If the answer disappoints, check search_faq for
    options you can offer (cancellation rights, returns) and name them

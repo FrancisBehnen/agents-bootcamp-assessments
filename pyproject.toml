@@ -8,10 +8,10 @@ version = "0.1.0"
 description = "Harness and assignments for the Agents Bootcamp (LangGraph + LangSmith)"
 requires-python = ">=3.10"
 dependencies = [
-    # The core framework family — see README.md for what each one does.
+    # The core framework family. See README.md for what each one does.
     "langchain>=1.0",        # high-level building blocks (create_agent, chat models, tools)
-    "langgraph>=1.0",        # graphs: nodes, edges, state — used for workflows AND agents
-    "langchain-openai>=1.0", # ChatOpenAI — we point it at the AI Service Router
+    "langgraph>=1.0",        # graphs: nodes, edges, state, used for workflows AND agents
+    "langchain-openai>=1.0", # ChatOpenAI, which we point at the AI Service Router
     "langsmith>=0.3",        # tracing & observability (you know this from the Evaluation day!)
     # Small utilities used by the harness tools.
     "python-dotenv>=1.0",    # loads your .env file with API keys
@@ -21,5 +21,5 @@ dependencies = [
 
 [tool.setuptools]
 # Only the shared `harness` package is installed. The day-1/2/3 assignment
-# folders are NOT a package — you run those files directly.
+# folders are NOT a package; you run those files directly.
 packages = ["harness", "harness.tools"]

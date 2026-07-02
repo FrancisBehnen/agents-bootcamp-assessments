@@ -5,7 +5,7 @@
 # LangGraph
 .langgraph_api/
 
-# Secrets — never commit your API keys!
+# Secrets: never commit your API keys!
 .env
 
 # Python
@@ -23,7 +23,7 @@ venv/
 .idea/
 .DS_Store
 
-# Source presentation decks — kept local, not in git.
+# Source presentation decks, kept local, not in git.
 # Two of them exceed GitHub's 100MB per-file limit and would block every push.
 # If you want the decks tracked, use Git LFS or share them elsewhere.
 *.pptx

@@ -1,8 +1,9 @@
 """The bootcamp *harness*: shared helper code for all assignments.
 
 "Harness" is a term you'll hear a lot this week: it's everything AROUND the
-LLM that turns it into a useful system — the model configuration, the tools,
-the memory, the instructions. This package is a mini version of that idea.
+LLM that turns it into a useful system, such as the model configuration, the
+tools, the memory, and the instructions. This package is a mini version of
+that idea.
 
 What lives here:
   - harness.llm      → get_llm(): a ready-to-use chat model

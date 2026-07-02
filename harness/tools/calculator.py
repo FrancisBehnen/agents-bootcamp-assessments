@@ -1,7 +1,7 @@
 """A safe calculator tool.
 
 Why does an LLM need a calculator? Because LLMs predict text, they don't
-compute — ask one for 4382 * 1.21 and it will confidently give you a number
+compute. Ask one for 4382 * 1.21 and it will confidently give you a number
 that is *almost* right. Tools fix this: let the LLM decide WHAT to calculate
 and let real code do the calculating.
 

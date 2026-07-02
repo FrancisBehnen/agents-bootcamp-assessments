@@ -1,4 +1,4 @@
-"""Day 2 · Assignment 1 — Extend your agent: tools & memory.
+"""Day 2 · Assignment 1: Extend your agent: tools & memory.
 
 You'll turn yesterday's toy agent into a customer service agent with:
   - real business tools (products, orders, FAQ)
@@ -31,7 +31,7 @@ TOOLS = []  # REPLACE ME
 # ---------------------------------------------------------------------------
 # TODO(you) 2: write the system prompt.
 #
-# A production-grade system prompt is structured — you saw this on the prompt
+# A production-grade system prompt is structured, as you saw on the prompt
 # engineering day (role / context / instructions / guardrails). Fill in the
 # sections below. Pay special attention to the memory instructions: the agent
 # only uses save_note/read_notes if you TELL it when to.
@@ -47,7 +47,7 @@ search_products?
 # Memory
 REPLACE ME: instruct the agent to
   - read its notes at the start of a conversation (read_notes)
-  - save durable customer preferences and facts (save_note) — but only
+  - save durable customer preferences and facts (save_note), but only
     things that are useful NEXT conversation, not chit-chat
 
 # Rules

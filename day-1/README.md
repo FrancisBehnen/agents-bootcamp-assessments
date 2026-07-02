@@ -1,4 +1,4 @@
-# Day 1 — Workflows vs. Agents
+# Day 1: Workflows vs. Agents
 
 **Goal of the day:** understand the difference between a *workflow* and an
 *agent*, and build one of each.
@@ -14,7 +14,7 @@
   Step 1 → Step 2 → Step 3, every single time. Predictable, testable, cheap.
 - **Agent** = the *LLM* decides the steps. You give it tools and a goal;
   it loops (think → call tool → look at result → think again) until done.
-  Flexible, powerful — and harder to predict.
+  It is flexible and powerful, and harder to predict.
 
 Neither is "better". Choosing the right one for the job is the actual skill,
 and it's what we'll debate during the show & tell after each assignment.
@@ -22,7 +22,7 @@ and it's what we'll debate during the show & tell after each assignment.
 ## Show & tell
 
 At the end of each assignment, a few people walk the group through their
-solution (5 minutes, straight from your screen — no slides). Questions we'll
+solution (5 minutes, straight from your screen, no slides). Questions we'll
 discuss:
 
 - Where did you let the LLM decide, and where did you decide in code?

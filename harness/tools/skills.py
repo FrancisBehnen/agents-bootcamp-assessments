@@ -1,7 +1,7 @@
 """Skill tools: list_skills and read_skill.
 
 A *skill* is a plain markdown file with step-by-step instructions for one
-specific task — like an instruction card you hand a new colleague. The trick
+specific task, like an instruction card you hand a new colleague. The trick
 is that the agent only loads a skill when it needs it:
 
   1. list_skills()      → shows just the names + one-line descriptions (cheap)

@@ -6,7 +6,7 @@ LLM can understand: the function name, the docstring and the argument types
 are shown to the model, and the model decides WHEN to call it. Your code
 decides WHAT the tool actually does.
 
-Every file in this folder is short and heavily commented — read them! They
+Every file in this folder is short and heavily commented, so read them! They
 are your examples for writing your own tools later this week.
 
 Import individual tools:

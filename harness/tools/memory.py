@@ -3,13 +3,13 @@
 There are two kinds of agent memory, and it's important not to mix them up:
 
 - SHORT-TERM memory = the conversation so far (the messages list). LangGraph
-  handles this with a *checkpointer* — you'll wire that up on day 2.
+  handles this with a *checkpointer*, which you'll wire up on day 2.
 - LONG-TERM memory = facts that should survive across conversations, like
   "this customer prefers quiet appliances". That's what these tools do.
 
 Here, long-term memory is just a JSON file on disk (`.agent_memory.json` in
 the folder you run your agent from). Open the file after a chat and look
-inside — being able to SEE your agent's memory makes it much less magical.
+inside. Being able to SEE your agent's memory makes it much less magical.
 """
 
 import json

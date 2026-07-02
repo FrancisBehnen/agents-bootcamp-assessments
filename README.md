@@ -1,8 +1,8 @@
-# Agents Bootcamp — Assignments & Harness
+# Agents Bootcamp: Assignments & Harness
 
 Welcome! 👋 This repo contains everything you need for the **Agents Bootcamp**: the
 assignments for all three days, plus a ready-made *harness* (shared helper code and
-tools) so you can focus on the interesting part — building agents — instead of
+tools) so you can focus on the interesting part, building agents, instead of
 plumbing.
 
 You've already completed the first sprint of the starter program:
@@ -19,11 +19,11 @@ You've already completed the first sprint of the starter program:
 |---|---|---|---|
 | **Day 1** | Understand workflows vs. agents | [Build your first workflow](day-1/assignment-1-workflow/) | [Build your first tool-calling agent](day-1/assignment-2-first-agent/) |
 | **Day 2** | Understand the agent harness | [Extend your agent: tools & memory](day-2/assignment-1-extended-agent/) | [An agent that browses & reads skills](day-2/assignment-2-skills-agent/) |
-| **Day 3** | Understand orchestration | [🏆 Build the Ultimate Agent](day-3/final-assignment-ultimate-agent/) (groups, all day, **prizes!**) | — |
+| **Day 3** | Understand orchestration | [🏆 Build the Ultimate Agent](day-3/final-assignment-ultimate-agent/) (groups, all day, **prizes!**) | none |
 
 Every assignment ends with a short **show & tell**: you present your approach in a
 few minutes and we discuss the different solutions. There is never one "right"
-answer — the discussion is where the learning happens.
+answer; the discussion is where the learning happens.
 
 ## Setup (do this before Day 1, ~10 minutes)
 
@@ -76,13 +76,13 @@ agents-bootcamp-assessments/
 Each assignment folder has its **own README** with the full instructions, and a
 **starter file** full of comments that walk you through the code. Look for:
 
-- `# TODO(you):` — the places where *you* write code
-- `✅ CHECKPOINT` — moments to stop and verify things work before moving on
-- `🚀 STRETCH GOALS` — finished early? These take it further
+- `# TODO(you):` marks the places where *you* write code
+- `✅ CHECKPOINT` marks moments to stop and verify things work before moving on
+- `🚀 STRETCH GOALS`: finished early? These take it further
 
 ## The harness: what's already built for you
 
-**One-line LLM access** — instead of configuring a model in every file:
+**One-line LLM access**, instead of configuring a model in every file:
 
 ```python
 from harness import get_llm
@@ -94,25 +94,25 @@ response = llm.invoke("Hello!")    # a normal LLM call, like in week 1
 > ℹ️ **We don't call OpenAI directly.** `get_llm()` routes every call through
 > Coolblue's **AI Service Router** (an OpenAI-compatible endpoint with
 > failover, shared quota and central auth, run by the Virtual Agents Platform
-> team). You don't have to think about it — it's the same LLM interface — but
+> team). You don't have to think about it (it's the same LLM interface), but
 > it's why your `.env` has `AI_SERVICE_ROUTER_*` variables instead of a raw
 > OpenAI key. Curious how it's wired? Read
-> [`harness/llm.py`](harness/llm.py) — it's ~15 lines.
+> [`harness/llm.py`](harness/llm.py); it's ~15 lines.
 
-**Ready-made tools** — small Python functions your agents can decide to call.
+**Ready-made tools** are small Python functions your agents can decide to call.
 They run on mock data, so no external accounts are needed and nothing can break:
 
 | Tool | What it does | Used from |
 |---|---|---|
 | `get_weather(city)` | Fake-but-consistent weather report | Day 1 |
 | `calculator(expression)` | Safely evaluates math like `"512 * 1.21"` | Day 1 |
-| `search_products(query)` | Searches the mock webshop catalog | Day 1–3 |
-| `get_product_details(product_id)` | Full specs, price and stock for one product | Day 2–3 |
-| `get_order_status(order_id)` | Looks up a customer order | Day 2–3 |
-| `search_faq(question)` | Searches store policies (returns, delivery, warranty) | Day 2–3 |
+| `search_products(query)` | Searches the mock webshop catalog | Days 1 to 3 |
+| `get_product_details(product_id)` | Full specs, price and stock for one product | Days 2 to 3 |
+| `get_order_status(order_id)` | Looks up a customer order | Days 2 to 3 |
+| `search_faq(question)` | Searches store policies (returns, delivery, warranty) | Days 2 to 3 |
 | `save_note(note)` / `read_notes()` | Simple long-term memory on disk | Day 2 |
 | `list_skills()` / `read_skill(name)` | Discover and load "skill" instruction files | Day 2 |
-| `fetch_webpage(url)` | Downloads a webpage as readable text | Day 2–3 |
+| `fetch_webpage(url)` | Downloads a webpage as readable text | Days 2 to 3 |
 
 Import them like this:
 
@@ -120,7 +120,7 @@ Import them like this:
 from harness.tools import get_weather, calculator, search_products
 ```
 
-You are encouraged to **read the harness source code** — every tool is short,
+You are encouraged to **read the harness source code**. Every tool is short,
 heavily commented, and shows you how to write your own.
 
 ## LangSmith: your X-ray glasses 🔍
@@ -141,15 +141,15 @@ trace is easy. Make it a habit from assignment 1.
 | Symptom | Fix |
 |---|---|
 | `ModuleNotFoundError: No module named 'harness'` | Run `pip install -e .` from the repo root, with your venv activated |
-| `401 Invalid client` | Your `AI_SERVICE_ROUTER_CLIENT` in `.env` doesn't match a registered clientName — ask the trainers |
+| `401 Invalid client` | Your `AI_SERVICE_ROUTER_CLIENT` in `.env` doesn't match a registered clientName, so ask the trainers |
 | `AuthenticationError` / 401 | Your `AI_SERVICE_ROUTER_API_KEY` in `.env` is missing or has a typo |
 | Connection / timeout errors | You may need to be on the Coolblue network/VPN to reach the router |
 | No traces in LangSmith | Check `LANGSMITH_TRACING=true` and your `LANGSMITH_API_KEY` in `.env` |
-| `.env` changes not picked up | Restart your Python process — the file is read at startup |
+| `.env` changes not picked up | Restart your Python process, since the file is read at startup |
 
 ## Useful documentation
 
-- [LangGraph concepts](https://docs.langchain.com/oss/python/langgraph/overview) — graphs, state, nodes, edges
-- [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents) — `create_agent` and friends
-- [Tools](https://docs.langchain.com/oss/python/langchain/tools) — writing your own `@tool`
-- [LangSmith](https://docs.langchain.com/langsmith/home) — tracing and evaluation
+- [LangGraph concepts](https://docs.langchain.com/oss/python/langgraph/overview): graphs, state, nodes, edges
+- [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents): `create_agent` and friends
+- [Tools](https://docs.langchain.com/oss/python/langchain/tools): writing your own `@tool`
+- [LangSmith](https://docs.langchain.com/langsmith/home): tracing and evaluation

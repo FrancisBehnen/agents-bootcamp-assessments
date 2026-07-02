@@ -1,7 +1,7 @@
 """Order lookup tool for the mock webshop.
 
 In a real company this tool would call an internal API. The agent code would
-look IDENTICAL — only the body of this function would change. That's the
+look IDENTICAL, and only the body of this function would change. That's the
 beauty of tools: they're a clean boundary between "LLM decides" and
 "systems do".
 """
@@ -31,7 +31,7 @@ def get_order_status(order_id: str) -> str:
         f"- Status: {order['status']}",
         f"- Ordered on: {order['ordered_on']}",
     ]
-    # Not every order has every field — only show what exists.
+    # Not every order has every field, so only show what exists.
     if "delivered_on" in order:
         lines.append(f"- Delivered on: {order['delivered_on']}")
     if "expected_delivery" in order:

@@ -1,4 +1,4 @@
-"""Day 1 · Assignment 1 — Build your first workflow.
+"""Day 1 · Assignment 1: Build your first workflow.
 
 A workflow = fixed steps, decided by YOU in code. The LLM fills in each step
 but never chooses what happens next:
@@ -7,7 +7,7 @@ but never chooses what happens next:
 
 The whole graph is ALREADY built and wired for you. Your only job is to write
 the prompts: the parts marked TODO(you). Two answer prompts are given as
-worked examples — copy their style for the ones you write.
+worked examples, so copy their style for the ones you write.
 
 Run it (from this folder):
     python workflow.py
@@ -34,13 +34,13 @@ class WorkflowState(TypedDict):
 
 
 # ===========================================================================
-# THE NODES — each one is a single LLM call. YOU write the prompts.
+# THE NODES: each one is a single LLM call. YOU write the prompts.
 # ===========================================================================
 
 def classify(state: WorkflowState) -> dict:
     """Decide what the message is about: 'product', 'order' or 'general'."""
 
-    # TODO(you) 1 — write the classification prompt.
+    # TODO(you) 1: write the classification prompt.
     # Make the model answer with EXACTLY one word: product, order or general.
     # Tips: list the three labels and what each means, show the message, and
     # end with something like "Reply with only the label, nothing else."
@@ -52,18 +52,18 @@ def classify(state: WorkflowState) -> dict:
 
     category = llm.invoke(prompt).content.strip().lower()
     # Safety net: if the model returns something unexpected, default to general
-    # instead of crashing. (Check your traces — does this ever trigger?)
+    # instead of crashing. (Check your traces: does this ever trigger?)
     if category not in ("product", "order", "general"):
         category = "general"
     return {"category": category}
 
 
 def answer_product(state: WorkflowState) -> dict:
-    """Draft an answer for a PRODUCT question.  ✅ WORKED EXAMPLE — read me!"""
+    """Draft an answer for a PRODUCT question.  ✅ WORKED EXAMPLE, read me!"""
     prompt = f"""You are a product expert at the webshop CoolShop.
 Draft a short, helpful answer to this product question. If you don't know a
 specific fact (like exact price or stock), say the customer can check the
-product page — never invent details.
+product page, and never invent details.
 
 Customer message: {state["customer_message"]}"""
     return {"draft_answer": llm.invoke(prompt).content}
@@ -72,7 +72,7 @@ Customer message: {state["customer_message"]}"""
 def answer_order(state: WorkflowState) -> dict:
     """Draft an answer for an ORDER question."""
 
-    # TODO(you) 2 — write this prompt yourself, in the same style as
+    # TODO(you) 2: write this prompt yourself, in the same style as
     # answer_product above. Think about what's different for order questions:
     # we can't actually look up the order yet (that's this afternoon's agent!),
     # so what CAN the model helpfully say, and what should it NOT promise?
@@ -85,7 +85,7 @@ def answer_order(state: WorkflowState) -> dict:
 
 
 def answer_general(state: WorkflowState) -> dict:
-    """Draft an answer for anything else.  ✅ WORKED EXAMPLE — read me!"""
+    """Draft an answer for anything else.  ✅ WORKED EXAMPLE, read me!"""
     prompt = f"""You are a friendly customer service employee at CoolShop.
 Draft a short answer to this message. If you can't help with the request, say
 so honestly and point the customer to customerservice@coolshop.example.
@@ -97,7 +97,7 @@ Customer message: {state["customer_message"]}"""
 def polish(state: WorkflowState) -> dict:
     """Rewrite the draft answer in CoolShop's tone of voice."""
 
-    # TODO(you) 3 — write a prompt that rewrites state["draft_answer"] to be:
+    # TODO(you) 3: write a prompt that rewrites state["draft_answer"] to be:
     #   - warm and personal, but professional
     #   - at most ~4 sentences
     #   - ending with one friendly closing line
@@ -110,7 +110,7 @@ def polish(state: WorkflowState) -> dict:
 
 
 # ===========================================================================
-# THE GRAPH — already wired for you. You don't need to change anything below.
+# THE GRAPH: already wired for you. You don't need to change anything below.
 # (But do read it: this same node/edge structure powers every agent this week.)
 # ===========================================================================
 

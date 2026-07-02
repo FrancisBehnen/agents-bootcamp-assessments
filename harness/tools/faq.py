@@ -2,7 +2,7 @@
 
 This is a *very* simple retrieval system: it scores each FAQ entry by how
 many keywords match the question. Real systems use embeddings for this (you
-learned about those in LLM Fundamentals — "a numeric representation of
+learned about those in LLM Fundamentals, "a numeric representation of
 meaning"). The interface to the agent is the same either way: question in,
 relevant text out. This is RAG in miniature.
 """
@@ -37,7 +37,7 @@ def search_faq(question: str) -> str:
             "methods, warranty, store pickup, installation, cancellations, VAT."
         )
 
-    # Return the top 2 matches — enough context, without flooding the agent.
+    # Return the top 2 matches: enough context, without flooding the agent.
     scored.sort(key=lambda pair: pair[0], reverse=True)
     results = []
     for _score, entry in scored[:2]:

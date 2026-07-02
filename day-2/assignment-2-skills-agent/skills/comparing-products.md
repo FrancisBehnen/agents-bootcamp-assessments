@@ -15,7 +15,7 @@ products, or which of several options to choose.
 2. **Compare only what differs AND matters.** Skip specs that are identical
    or irrelevant to the customer's use case.
 3. **Present as a compact markdown table**: one row per spec that differs,
-   one column per product. Maximum 5 rows — pick the 5 most decision-relevant
+   one column per product. Maximum 5 rows, so pick the 5 most decision-relevant
    differences.
 4. **Translate the winner per row.** Below the table, one short bullet per
    product: "Choose the X if you ...".

@@ -33,13 +33,21 @@ refinement of that loop.
 
 ## See it in action 🎬
 
-That loop, running for real in the terminal:
+That loop, running in the terminal:
 
-<!-- Generate this once with `vhs demo/agent-demo.tape` (see demo/README.md), then uncomment the next line: -->
-<!-- ![Agent demo](demo/agent-demo.gif) -->
+<div align="center">
 
-The finished demo agent and a one-command recorder live in [`demo/`](demo/).
-Run `vhs demo/agent-demo.tape` to (re)generate the GIF.
+![Agent demo](demo/agent-demo.gif)
+
+</div>
+
+The finished demo agent lives in [`demo/`](demo/). To regenerate the GIF you
+only need Pillow (no system tools like `vhs` or `ffmpeg`):
+
+```bash
+pip install pillow
+python demo/record_demo.py
+```
 
 ## What you already know
 

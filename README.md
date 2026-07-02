@@ -1,11 +1,50 @@
-# Agents Bootcamp: Assignments & Harness
+<div align="center">
+
+# 🤖 Agents Bootcamp
+
+**Assignments & Harness**
+
+Build your first AI agents, step by step, in LangGraph and LangSmith.
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white) ![LangGraph](https://img.shields.io/badge/LangGraph-1.x-1C3C3C?logo=langchain&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-1.x-1C3C3C?logo=langchain&logoColor=white) ![LangSmith](https://img.shields.io/badge/LangSmith-observability-FF7139) ![Level](https://img.shields.io/badge/level-beginner%20friendly-2EA043)
+
+</div>
+
+---
 
 Welcome! 👋 This repo contains everything you need for the **Agents Bootcamp**: the
 assignments for all three days, plus a ready-made *harness* (shared helper code and
 tools) so you can focus on the interesting part, building agents, instead of
 plumbing.
 
-You've already completed the first sprint of the starter program:
+> **The one idea behind the whole week:** an agent is just an LLM in a loop with
+> tools and a goal.
+
+```mermaid
+flowchart LR
+    U(["🧑 Your question"]) --> A["🧠 LLM thinks"]
+    A -->|needs a tool| T["🔧 Run a tool"]
+    T -->|result| A
+    A -->|done| F(["✅ Final answer"])
+```
+
+Everything else you learn this week (memory, skills, orchestration) is a
+refinement of that loop.
+
+## See it in action 🎬
+
+That loop, running for real in the terminal:
+
+<!-- Generate this once with `vhs demo/agent-demo.tape` (see demo/README.md), then uncomment the next line: -->
+<!-- ![Agent demo](demo/agent-demo.gif) -->
+
+The finished demo agent and a one-command recorder live in [`demo/`](demo/).
+Run `vhs demo/agent-demo.tape` to (re)generate the GIF.
+
+## What you already know
+
+You've completed the first sprint of the starter program, and this week builds
+straight on top of it:
 
 | Earlier session | What you learned there | How we build on it |
 |---|---|---|
@@ -13,7 +52,13 @@ You've already completed the first sprint of the starter program:
 | Prompt & Context Engineering | System prompts, the message paradigm, RAG | Agents live or die by their context |
 | Observability & Evaluation | LangSmith traces, LLM-as-a-judge | You'll trace every agent you build this week |
 
-## The week at a glance
+## The week at a glance 🗺️
+
+```mermaid
+flowchart TD
+    D1["📗 Day 1<br/>Workflows vs. Agents"] --> D2["📘 Day 2<br/>The Agent Harness"] --> D3["🏆 Day 3<br/>Orchestration + Finale"]
+    style D3 fill:#2EA043,color:#fff
+```
 
 | Day | Goal | Morning assignment | Afternoon assignment |
 |---|---|---|---|
@@ -25,9 +70,10 @@ Every assignment ends with a short **show & tell**: you present your approach in
 few minutes and we discuss the different solutions. There is never one "right"
 answer; the discussion is where the learning happens.
 
-## Setup (do this before Day 1, ~10 minutes)
+## Setup ⚙️
 
-You need **Python 3.10 or newer** (`python3 --version` to check).
+> Do this before Day 1. It takes about 10 minutes. You need **Python 3.10 or
+> newer** (`python3 --version` to check).
 
 ```bash
 # 1. Clone this repo and move into it
@@ -42,7 +88,7 @@ source .venv/bin/activate        # Windows: .venv\Scripts\activate
 #    The "-e" means "editable": Python always uses the live code in this folder.
 pip install -e .
 
-# 4. Create your personal .env file and fill in the API keys you received
+# 4. Create your personal .env file and fill in the keys you received
 cp .env.example .env
 #    ... now open .env in your editor and paste your keys ...
 
@@ -53,7 +99,10 @@ python check_setup.py
 If `check_setup.py` prints all green checkmarks, you're ready. If not, it tells
 you exactly what to fix.
 
-## What's in this repo?
+## What's in this repo? 📂
+
+<details>
+<summary><b>Click to expand the folder tree</b></summary>
 
 ```
 agents-bootcamp-assessments/
@@ -73,6 +122,8 @@ agents-bootcamp-assessments/
 └── .env.example              ← Template for your API keys
 ```
 
+</details>
+
 Each assignment folder has its **own README** with the full instructions, and a
 **starter file** full of comments that walk you through the code. Look for:
 
@@ -80,7 +131,9 @@ Each assignment folder has its **own README** with the full instructions, and a
 - `✅ CHECKPOINT` marks moments to stop and verify things work before moving on
 - `🚀 STRETCH GOALS`: finished early? These take it further
 
-## The harness: what's already built for you
+## The harness 🧰
+
+The harness is everything already built for you, so you never start from a blank file.
 
 **One-line LLM access**, instead of configuring a model in every file:
 
@@ -97,22 +150,22 @@ response = llm.invoke("Hello!")    # a normal LLM call, like in week 1
 > team). You don't have to think about it (it's the same LLM interface), but
 > it's why your `.env` has `AI_SERVICE_ROUTER_*` variables instead of a raw
 > OpenAI key. Curious how it's wired? Read
-> [`harness/llm.py`](harness/llm.py); it's ~15 lines.
+> [`harness/llm.py`](harness/llm.py); it's about 15 lines.
 
 **Ready-made tools** are small Python functions your agents can decide to call.
 They run on mock data, so no external accounts are needed and nothing can break:
 
 | Tool | What it does | Used from |
 |---|---|---|
-| `get_weather(city)` | Fake-but-consistent weather report | Day 1 |
-| `calculator(expression)` | Safely evaluates math like `"512 * 1.21"` | Day 1 |
-| `search_products(query)` | Searches the mock webshop catalog | Days 1 to 3 |
-| `get_product_details(product_id)` | Full specs, price and stock for one product | Days 2 to 3 |
-| `get_order_status(order_id)` | Looks up a customer order | Days 2 to 3 |
-| `search_faq(question)` | Searches store policies (returns, delivery, warranty) | Days 2 to 3 |
-| `save_note(note)` / `read_notes()` | Simple long-term memory on disk | Day 2 |
-| `list_skills()` / `read_skill(name)` | Discover and load "skill" instruction files | Day 2 |
-| `fetch_webpage(url)` | Downloads a webpage as readable text | Days 2 to 3 |
+| 🌤️ `get_weather(city)` | Fake-but-consistent weather report | Day 1 |
+| 🧮 `calculator(expression)` | Safely evaluates math like `"512 * 1.21"` | Day 1 |
+| 🔎 `search_products(query)` | Searches the mock webshop catalog | Days 1 to 3 |
+| 📦 `get_product_details(product_id)` | Full specs, price and stock for one product | Days 2 to 3 |
+| 🚚 `get_order_status(order_id)` | Looks up a customer order | Days 2 to 3 |
+| 📖 `search_faq(question)` | Searches store policies (returns, delivery, warranty) | Days 2 to 3 |
+| 📔 `save_note(note)` / `read_notes()` | Simple long-term memory on disk | Day 2 |
+| 🧩 `list_skills()` / `read_skill(name)` | Discover and load "skill" instruction files | Day 2 |
+| 🌐 `fetch_webpage(url)` | Downloads a webpage as readable text | Days 2 to 3 |
 
 Import them like this:
 
@@ -136,7 +189,10 @@ name. When (not if!) your agent does something weird:
 Debugging agents by staring at your code is hard. Debugging them by reading the
 trace is easy. Make it a habit from assignment 1.
 
-## Troubleshooting
+## Troubleshooting 🩺
+
+<details>
+<summary><b>Common problems and their fixes</b></summary>
 
 | Symptom | Fix |
 |---|---|
@@ -147,7 +203,9 @@ trace is easy. Make it a habit from assignment 1.
 | No traces in LangSmith | Check `LANGSMITH_TRACING=true` and your `LANGSMITH_API_KEY` in `.env` |
 | `.env` changes not picked up | Restart your Python process, since the file is read at startup |
 
-## Useful documentation
+</details>
+
+## Useful documentation 📚
 
 - [LangGraph concepts](https://docs.langchain.com/oss/python/langgraph/overview): graphs, state, nodes, edges
 - [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents): `create_agent` and friends

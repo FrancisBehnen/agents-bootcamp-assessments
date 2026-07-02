@@ -1,6 +1,13 @@
 # Day 2 · Assignment 1: Extend your agent: tools & memory
 
-⏱️ ~90 minutes · 👤 solo or pairs · 🧰 starter code: [`agent.py`](agent.py)
+![Day 2](https://img.shields.io/badge/Day%202-Morning-1D4ED8) ![Time](https://img.shields.io/badge/~90%20min-lightgrey) ![Mode](https://img.shields.io/badge/solo%20or%20pairs-8A2BE2) ![Starter](https://img.shields.io/badge/starter-agent.py-0F766E)
+
+```mermaid
+flowchart LR
+    U(["🧑 Customer"]) --> AG["🤖 Agent"]
+    AG --> TOOLS["🧰 Product / Order / FAQ tools"]
+    AG --> MEM["📔 Memory (notes + chat history)"]
+```
 
 ## What you'll build
 

@@ -1,6 +1,6 @@
 # Day 1 · Assignment 1: Build your first workflow
 
-⏱️ ~45 minutes · 👤 solo or pairs · 🧰 starter code: [`workflow.py`](workflow.py)
+![Day 1](https://img.shields.io/badge/Day%201-Morning-3776AB) ![Time](https://img.shields.io/badge/~45%20min-lightgrey) ![Mode](https://img.shields.io/badge/solo%20or%20pairs-8A2BE2) ![Starter](https://img.shields.io/badge/starter-workflow.py-0F766E)
 
 ## What you'll build
 
@@ -8,10 +8,16 @@ A **customer message workflow** for our mock webshop. The graph is already
 built and wired, so **you only write the prompts**. This keeps today about the
 one idea that matters: in a workflow, *you* decide the steps.
 
-```
-customer message ──► classify ──► answer_product   ──► polish ──► done
-                        │    └──► answer_order     ──►│
-                        └────────► answer_general  ──►│
+```mermaid
+flowchart LR
+    M(["📨 Customer message"]) --> C["classify"]
+    C -->|product| P["answer_product"]
+    C -->|order| O["answer_order"]
+    C -->|general| G["answer_general"]
+    P --> PL["polish"]
+    O --> PL
+    G --> PL
+    PL --> D(["✅ Done"])
 ```
 
 1. **classify** labels the message: *product*, *order*, or *general*.

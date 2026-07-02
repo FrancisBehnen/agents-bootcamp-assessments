@@ -28,3 +28,4 @@ venv/
 # If you want the decks tracked, use Git LFS or share them elsewhere.
 *.pptx
 
+.gstack/

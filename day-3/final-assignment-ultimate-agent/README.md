@@ -1,6 +1,6 @@
 # 🏆 Day 3 · Final Assignment · Build the Ultimate Agent
 
-⏱️ all day (~5 hours) · 👥 teams of 3 to 4 · 🎤 demo at 15:00 · 🏅 prizes!
+![Day 3](https://img.shields.io/badge/Day%203-Final-16A34A) ![Duration](https://img.shields.io/badge/all%20day%20(~5%20hours)-lightgrey) ![Teams](https://img.shields.io/badge/teams%20of%203%20to%204-8A2BE2) ![Demo](https://img.shields.io/badge/demo%20at%2015%3A00-2EA043) ![Prizes](https://img.shields.io/badge/prizes-%F0%9F%8F%85-gold)
 
 ## The mission
 
@@ -11,6 +11,18 @@ complaints, policies, the works. Your team builds it.
 You have the full harness at your disposal (all tools, the skills mechanism,
 memory, and everything you built this week). How you architect it is **your
 call**, and that's the assignment.
+
+```mermaid
+flowchart TD
+    U(["🧑 CoolShop customer"]) --> S["🧭 Supervisor"]
+    S --> A1["🛍️ Product advice"]
+    S --> A2["📦 Order questions"]
+    S --> A3["🙂 Complaints & policies"]
+    A1 --> S
+    A2 --> S
+    A3 --> S
+    S --> R(["💬 One clear answer"])
+```
 
 ## Hard requirements (the jury checks all of these)
 

@@ -1,6 +1,14 @@
 # Day 2 · Assignment 2: An agent that browses and reads skills
 
-⏱️ ~90 minutes · 👤 solo or pairs · 🧰 starter code: [`agent.py`](agent.py) + [`skills/`](skills/)
+![Day 2](https://img.shields.io/badge/Day%202-Afternoon-1D4ED8) ![Time](https://img.shields.io/badge/~90%20min-lightgrey) ![Mode](https://img.shields.io/badge/solo%20or%20pairs-8A2BE2) ![Starter](https://img.shields.io/badge/starter-agent.py%20%2B%20skills%2F-0F766E)
+
+```mermaid
+flowchart LR
+    U(["🧑 Customer"]) --> LS["🧩 list_skills()"]
+    LS --> RS["📖 read_skill(name)"]
+    RS --> STEPS["✅ Follow the steps"]
+    STEPS -.->|when needed| WEB["🌐 fetch_webpage(url)"]
+```
 
 ## What you'll build
 

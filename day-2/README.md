@@ -1,5 +1,15 @@
 # Day 2: The Agent Harness
 
+![Day 2](https://img.shields.io/badge/Day%202-The%20Agent%20Harness-1D4ED8) ![Assignments](https://img.shields.io/badge/assignments-2-blue) ![Level](https://img.shields.io/badge/level-beginner%20friendly-2EA043)
+
+```mermaid
+flowchart LR
+    I["📜 Instructions"] --> AG["🤖 Agent"]
+    T["🧰 Tools"] --> AG
+    M["📔 Memory"] --> AG
+    S["🧩 Skills"] --> AG
+```
+
 **Goal of the day:** understand what makes a *good* agent: not a smarter
 model, but a better **harness**, meaning the instructions, tools, memory and
 skills you build around the LLM.

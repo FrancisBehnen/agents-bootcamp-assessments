@@ -1,18 +1,17 @@
 # Day 1 · Assignment 2: Build your first agent
 
-⏱️ ~75 minutes · 👤 solo or pairs · 🧰 starter code: [`agent.py`](agent.py)
+![Day 1](https://img.shields.io/badge/Day%201-Afternoon-3776AB) ![Time](https://img.shields.io/badge/~75%20min-lightgrey) ![Mode](https://img.shields.io/badge/solo%20or%20pairs-8A2BE2) ![Starter](https://img.shields.io/badge/starter-agent.py-0F766E)
 
 ## What you'll build
 
 This morning *you* decided the steps. Now you hand that control to the LLM.
 An **agent** is an LLM in a loop with tools and a goal:
 
-```
-        ┌──────────────────────────────┐
-        ▼                              │
-   LLM thinks ──► wants a tool? ──► run tool ──► result goes back to LLM
-        │
-        └──► no tool needed? ──► final answer
+```mermaid
+flowchart LR
+    A["🧠 LLM thinks"] -->|needs a tool| T["🔧 Run a tool"]
+    T -->|result| A
+    A -->|done| F(["✅ Final answer"])
 ```
 
 That loop **is** the agent. `create_agent()` builds it for you, so you build

@@ -1,5 +1,7 @@
 # Day 3: Agent Orchestration & The Grand Finale
 
+![Day 3](https://img.shields.io/badge/Day%203-Orchestration%20%2B%20Finale-16A34A) ![Format](https://img.shields.io/badge/group%20project-16A34A) ![Prizes](https://img.shields.io/badge/prizes-%F0%9F%8F%86-gold)
+
 **Goal of the day:** understand agent *orchestration*, meaning how multiple
 agents work together, and prove it by building the Ultimate Agent in teams.
 
@@ -14,6 +16,18 @@ agents work together, and prove it by building the Ultimate Agent in teams.
 By now you've seen it yourself: one agent with ten tools starts making
 mistakes. Its context fills up, tool choice gets sloppy, prompts fight each
 other. The fix mirrors how companies work: **specialists plus coordination**.
+
+```mermaid
+flowchart TD
+    U(["🧑 Customer"]) --> S["🧭 Supervisor"]
+    S --> A1["🛍️ Product advisor"]
+    S --> A2["📦 Order desk"]
+    S --> A3["🙂 Complaints"]
+    A1 --> S
+    A2 --> S
+    A3 --> S
+    S --> R(["💬 One clear answer"])
+```
 
 Patterns you can choose from today (mix freely):
 

@@ -1,7 +1,14 @@
 # Day 1: Workflows vs. Agents
 
+![Day 1](https://img.shields.io/badge/Day%201-Workflows%20vs%20Agents-3776AB) ![Assignments](https://img.shields.io/badge/assignments-2-blue) ![Level](https://img.shields.io/badge/level-beginner%20friendly-2EA043)
+
 **Goal of the day:** understand the difference between a *workflow* and an
 *agent*, and build one of each.
+
+```mermaid
+flowchart LR
+    M["🌅 Morning<br/>Workflow: you decide the steps"] --> A["🌇 Afternoon<br/>Agent: the LLM decides the steps"]
+```
 
 | Part | Assignment | What you build |
 |---|---|---|

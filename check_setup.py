@@ -97,7 +97,7 @@ if tracing and api_key:
     ok(f'LangSmith tracing is ON, project "{project}"')
     print(
         "\n     Your test call above was traced! Go look at it:\n"
-        "     → https://smith.langchain.com  (open your project, click the trace)"
+        "     → https://eu.smith.langchain.com  (open your project, click the trace)"
     )
 elif tracing and not api_key:
     warn("LANGSMITH_TRACING=true but LANGSMITH_API_KEY is empty, so tracing won't work yet.")

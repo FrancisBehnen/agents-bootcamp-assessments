@@ -187,8 +187,8 @@ heavily commented, and shows you how to write your own.
 ## LangSmith: your X-ray glasses 🔍
 
 Because your `.env` sets `LANGSMITH_TRACING=true`, every run automatically
-appears at [smith.langchain.com](https://smith.langchain.com) under your project
-name. When (not if!) your agent does something weird:
+appears at [eu.smith.langchain.com](https://eu.smith.langchain.com) under your
+project name. When (not if!) your agent does something weird:
 
 1. Open your project in LangSmith
 2. Click the most recent trace
@@ -209,6 +209,7 @@ trace is easy. Make it a habit from assignment 1.
 | `AuthenticationError` / 401 | Your `AI_SERVICE_ROUTER_API_KEY` in `.env` is missing or has a typo |
 | Connection / timeout errors | You may need to be on the Coolblue network/VPN to reach the router |
 | No traces in LangSmith | Check `LANGSMITH_TRACING=true` and your `LANGSMITH_API_KEY` in `.env` |
+| `403 Forbidden` from `api.smith.langchain.com` | Your LangSmith account is in the EU region: set `LANGSMITH_ENDPOINT=https://eu.api.smith.langchain.com` in `.env` |
 | `.env` changes not picked up | Restart your Python process, since the file is read at startup |
 
 </details>

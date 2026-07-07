@@ -7,6 +7,10 @@ free, so you can focus on the two things that actually shape an agent:
     PART A: the system prompt   (a tool is already wired, so you ONLY edit the prompt)
     PART B: adding your own tool (write a new tool from scratch)
 
+Heads up: the PART B code block comes FIRST in this file, because Python needs
+tools to be defined above the TOOLS list that uses them. So don't work top to
+bottom! Scroll down to the "PART A: the agent. Start here." banner.
+
 Run it (from this folder):
     python agent.py
 """
@@ -18,7 +22,8 @@ from harness import get_llm
 from harness.tools import calculator, get_weather
 
 # ===========================================================================
-# PART B lives here, but do PART A first!
+# ⚠️ STOP, this is PART B! Still on PART A? Scroll down to
+#    "PART A: the agent. Start here."
 # ---------------------------------------------------------------------------
 # A tool is just a normal Python function with the @tool decorator and a good
 # docstring. The LLM reads the function name, the docstring and the argument
@@ -37,6 +42,7 @@ def count_words(text: str) -> str:
 
 
 # TODO(you) PART B: write your OWN tool here, from scratch.
+# (Come back to this after finishing PART A below.)
 #
 # Spec: a tool that converts an amount in euros to US dollars.
 #       Use a fixed exchange rate of 1 EUR = 1.08 USD.

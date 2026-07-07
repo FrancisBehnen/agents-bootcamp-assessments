@@ -53,7 +53,7 @@ and each one is classified into the right category.
 
 ## Look at your traces! 🔍
 
-Open [smith.langchain.com](https://smith.langchain.com) → your project. Each
+Open [eu.smith.langchain.com](https://eu.smith.langchain.com) → your project. Each
 run shows the full path through the graph: which nodes ran, what prompt each
 one sent, what the LLM replied. Did the classifier ever pick the wrong
 category? What happened downstream when it did?

@@ -100,4 +100,4 @@ if __name__ == "__main__":
     for message in result["messages"]:
         message.pretty_print()
 
-    print("\nNow find this run in https://smith.langchain.com and study the loop!")
+    print("\nNow find this run in https://eu.smith.langchain.com and study the loop!")

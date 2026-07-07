@@ -169,4 +169,4 @@ if __name__ == "__main__":
         print(f"ANSWER:   {result['final_answer']}\n")
 
     print("=" * 70)
-    print("Now open https://smith.langchain.com and inspect the three traces!")
+    print("Now open https://eu.smith.langchain.com and inspect the three traces!")

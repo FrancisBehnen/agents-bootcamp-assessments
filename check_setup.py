@@ -14,8 +14,14 @@ If a step fails, the script tells you how to fix it and stops.
 """
 
 import os
+import shutil
 import sys
 from pathlib import Path
+
+# On Windows this enables ANSI color codes in the terminal, so the checkmarks
+# below show in color instead of as raw escape codes.
+if os.name == "nt":
+    os.system("")
 
 REPO_ROOT = Path(__file__).resolve().parent
 
@@ -42,12 +48,23 @@ def warn(msg: str) -> None:
 print("\nChecking your Agents Bootcamp setup...\n")
 
 # --- Step 1: .env file ------------------------------------------------------
+# If .env is missing, create it from the template automatically. That way
+# nobody needs a copy command, and it works the same on Windows, macOS and Linux.
 env_file = REPO_ROOT / ".env"
+example_file = REPO_ROOT / ".env.example"
 if not env_file.exists():
-    fail(
-        "No .env file found in the repo root.",
-        "Run `cp .env.example .env` and fill in your keys.",
+    if not example_file.exists():
+        fail(
+            "No .env or .env.example found.",
+            "Make sure you are running this from the repo root folder.",
+        )
+    shutil.copy(example_file, env_file)
+    print(f"{GREEN}  ✅ Created .env from .env.example{RESET}")
+    print(
+        f"{YELLOW}     Next step: open .env, paste the keys you received from the "
+        f"trainers,\n     then run this again (python check_setup.py).{RESET}"
     )
+    sys.exit(0)
 ok(".env file found")
 
 from dotenv import load_dotenv  # noqa: E402  (import after the file check on purpose)

@@ -1,0 +1,12 @@
+# Keep line endings correct across operating systems, so the setup scripts
+# always work regardless of who checked out the repo.
+* text=auto
+
+# Shell scripts must stay LF, even when checked out on Windows.
+*.sh text eol=lf
+
+# Batch files must be CRLF to run reliably in Windows Command Prompt.
+*.bat text eol=crlf
+
+# The demo GIF is binary; never touch its bytes.
+*.gif binary

@@ -80,32 +80,62 @@ answer; the discussion is where the learning happens.
 
 ## Setup ⚙️
 
-> Do this before Day 1. It takes about 10 minutes. You need **Python 3.10 or
-> newer** (`python3 --version` to check).
+> Do this before Day 1. It takes about 10 minutes. First install **Python 3.10
+> or newer** from [python.org](https://www.python.org/downloads/). On Windows,
+> tick **"Add python.exe to PATH"** in the installer.
+
+**1. Get the code:**
 
 ```bash
-# 1. Clone this repo and move into it
-git clone <repo-url>
+git clone https://github.com/JelmerCoolblue/agents-bootcamp-assessments.git
 cd agents-bootcamp-assessments
+```
 
-# 2. Create a virtual environment (an isolated box for this project's packages)
-python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+**2. Run the one-command setup for your system** (from the repo folder). It
+creates the virtual environment, installs everything, and runs the checker:
 
-# 3. Install the harness + all dependencies
-#    The "-e" means "editable": Python always uses the live code in this folder.
+| Windows | macOS / Linux |
+|---|---|
+| `setup.bat` | `./setup.sh` |
+
+**3. Add your keys.** The step above creates a `.env` file for you. Open it,
+paste the keys you received from the trainers, then run the checker once more:
+
+| Windows | macOS / Linux |
+|---|---|
+| `.venv\Scripts\python check_setup.py` | `.venv/bin/python check_setup.py` |
+
+When `check_setup.py` shows all green checkmarks, you're ready. 🎉
+
+To work on the assignments afterwards, activate the environment in each new
+terminal: `.venv\Scripts\activate` on Windows, or `source .venv/bin/activate`
+on macOS / Linux.
+
+<details>
+<summary><b>Prefer to run each step yourself? (manual setup)</b></summary>
+
+**Windows** (Command Prompt; in PowerShell activate with `.venv\Scripts\Activate.ps1`):
+
+```bat
+python -m venv .venv
+.venv\Scripts\activate
 pip install -e .
-
-# 4. Create your personal .env file and fill in the keys you received
-cp .env.example .env
-#    ... now open .env in your editor and paste your keys ...
-
-# 5. Verify that everything works
 python check_setup.py
 ```
 
-If `check_setup.py` prints all green checkmarks, you're ready. If not, it tells
-you exactly what to fix.
+**macOS / Linux:**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+python check_setup.py
+```
+
+`check_setup.py` creates your `.env` on the first run. Open it, paste your keys,
+then run `python check_setup.py` again. All green checkmarks means you're ready.
+
+</details>
 
 ## What's in this repo? 📂
 
@@ -204,6 +234,8 @@ trace is easy. Make it a habit from assignment 1.
 
 | Symptom | Fix |
 |---|---|
+| Windows: `'python' is not recognized` | Reinstall Python and tick "Add python.exe to PATH", or type `py` instead of `python`. Then run `setup.bat` again |
+| Windows PowerShell: `running scripts is disabled on this system` | Use `setup.bat` (it sidesteps this), or run `Set-ExecutionPolicy -Scope Process RemoteSigned` and then activate again |
 | `ModuleNotFoundError: No module named 'harness'` | Run `pip install -e .` from the repo root, with your venv activated |
 | `401 Invalid client` | Your `AI_SERVICE_ROUTER_CLIENT` in `.env` doesn't match a registered clientName, so ask the trainers |
 | `AuthenticationError` / 401 | Your `AI_SERVICE_ROUTER_API_KEY` in `.env` is missing or has a typo |

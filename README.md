@@ -87,7 +87,7 @@ answer; the discussion is where the learning happens.
 **1. Get the code:**
 
 ```bash
-git clone https://github.com/JelmerCoolblue/agents-bootcamp-assessments.git
+git clone https://github.com/DitisAlex/agents-bootcamp-assessments.git
 cd agents-bootcamp-assessments
 ```
 

@@ -50,13 +50,13 @@ flowchart TD
 - Add your own skills, your own data, your own personality.
 - A creative extra feature is explicitly rewarded in the rubric, so surprise us.
 
-## The demo (5 minutes per team, strict)
+## The demo (10 minutes per team, strict)
 
-1. **30 sec:** your architecture, on one diagram (whiteboard photo is fine).
-2. **2 min:** live demo: your best scenario + one scenario the jury picks.
-3. **1 min:** one LangSmith trace: walk us through an interesting decision.
-4. **1 min:** your eval: what did you measure, what did it score?
-5. **30 sec:** what you'd build next with one more week.
+1. **1 min:** your architecture, on one diagram (whiteboard photo is fine).
+2. **4 min:** live demo: your best scenario + two scenarios the jury picks.
+3. **2 min:** one LangSmith trace: walk us through an interesting decision.
+4. **2 min:** your eval: what did you measure, on what dataset, and what did it score?
+5. **1 min:** what you'd build next with one more week.
 
 ## Scoring
 

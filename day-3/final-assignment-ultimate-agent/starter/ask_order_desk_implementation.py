@@ -166,6 +166,12 @@ order_desk_agent = create_agent(
 def ask_order_desk(request: str) -> str:
     """Get verified order and policy information for the supervisor's response.
 
+    Available tools:
+        get_order_status: Looks up a specific order's items, status, dates,
+            expected delivery, and notes using its order number.
+        search_faq: Searches verified store policies covering delivery, returns,
+            cancellations, warranties, payments, installation, and store pickup.
+
     Args:
         request: A self-contained task written by the supervisor. Include the
             order number, the information or policy to retrieve, and any relevant

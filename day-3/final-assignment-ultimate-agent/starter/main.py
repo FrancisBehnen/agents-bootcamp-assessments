@@ -29,6 +29,7 @@ from uuid import uuid4
 
 from pathlib import Path
 from harness import create_agent, get_llm
+from harness.tools.skills import configure_skills_directory
 from harness.tools import (
     MEMORY_TOOLS,
     SKILL_TOOLS,

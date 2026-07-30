@@ -22,7 +22,11 @@ from harness.tools.calculator import calculator
 from harness.tools.faq import search_faq
 from harness.tools.memory import read_notes, save_note
 from harness.tools.orders import get_order_status
-from harness.tools.products import get_product_details, search_products
+from harness.tools.products import (
+    compare_replacement_products,
+    get_product_details,
+    search_products,
+)
 from harness.tools.skills import list_skills, read_skill
 from harness.tools.weather import get_weather
 from harness.tools.web import fetch_webpage
@@ -30,6 +34,7 @@ from harness.tools.web import fetch_webpage
 # Themed bundles, matched to the assignments:
 BASIC_TOOLS = [get_weather, calculator]                                # day 1
 WEBSHOP_TOOLS = [search_products, get_product_details,                 # day 2+
+                 compare_replacement_products,
                  get_order_status, search_faq]
 MEMORY_TOOLS = [save_note, read_notes]                                 # day 2
 SKILL_TOOLS = [list_skills, read_skill]                                # day 2
@@ -40,6 +45,7 @@ __all__ = [
     "calculator",
     "search_products",
     "get_product_details",
+    "compare_replacement_products",
     "get_order_status",
     "search_faq",
     "save_note",

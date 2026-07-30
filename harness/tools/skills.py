@@ -22,6 +22,11 @@ from langchain.tools import tool
 # Relative path: resolved against the folder you run your script from.
 _SKILLS_DIR = Path("skills")
 
+def configure_skills_directory(path: str | Path) -> None:
+    """Set the directory used by list_skills and read_skill."""
+    global _SKILLS_DIR
+    _SKILLS_DIR = Path(path)
+
 
 def _parse_frontmatter(text: str) -> dict[str, str]:
     """Read the name/description header between the '---' lines of a skill file."""

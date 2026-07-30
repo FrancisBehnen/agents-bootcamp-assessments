@@ -27,6 +27,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 from openai import BadRequestError
 from uuid import uuid4
 
+from pathlib import Path
 from harness import create_agent, get_llm
 from harness.tools import (
     MEMORY_TOOLS,
@@ -37,6 +38,8 @@ from harness.tools import (
     search_faq,
     search_products,
 )
+
+configure_skills_directory(Path(__file__).with_name("skills"))
 
 FILTERED_JAILBREAK_RESPONSE = (
     "We see that you are trying to break into our system. Nice try! Better luck next time. "

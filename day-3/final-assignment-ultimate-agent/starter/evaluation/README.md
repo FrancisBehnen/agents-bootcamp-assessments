@@ -43,9 +43,10 @@ python evaluate.py --out scorecard.json   # also save machine-readable results
 
 The runner works from any directory. It resolves `--dataset` and `--out` against
 wherever you started it, then switches to the starter folder before loading the
-agent, because the harness resolves `skills/` against the working directory. Run
-the agent from the wrong folder and `read_skill` quietly returns "No skills/
-folder found", which means you are evaluating a different agent than you ship.
+agent, so an evaluated turn behaves exactly like `python main.py`. Harness state
+that is resolved against the working directory, such as the memory tools'
+`.agent_memory.json`, would otherwise differ between the two and you would be
+evaluating an agent you do not ship.
 
 A run seeds and uses its own long-term memory file,
 `evaluation/.eval_agent_memory.json`, so results never depend on, or pollute, the

@@ -48,10 +48,12 @@ EVAL_MEMORY_FILE = EVAL_DIR / ".eval_agent_memory.json"
 def load_supervisor():
     """Import the agent system from main.py without running its CLI loop.
 
-    The harness resolves `skills/` against the current working directory, so the
-    evaluation runs from the starter folder no matter where it was started. Skip
-    this and `read_skill` silently reports "No skills/ folder found", which means
-    the agent under evaluation is not the agent you ship.
+    Runs from the starter folder whatever directory the runner was started in, so
+    an evaluated turn behaves exactly like `python main.py`. Harness state such as
+    the memory tools' `.agent_memory.json` is resolved against the working
+    directory, and a mismatch there means evaluating an agent you do not ship.
+    (`skills/` used to be cwd-relative too; main.py now pins it explicitly with
+    configure_skills_directory.)
     """
     os.chdir(STARTER_DIR)
     main_file = STARTER_DIR / "main.py"

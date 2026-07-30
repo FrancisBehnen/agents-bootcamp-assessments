@@ -18,6 +18,9 @@ venv/
 # Created by the long-term memory tool during the day-2 assignment
 .agent_memory.json
 
+# Created by the day-3 evaluation runner (its own isolated long-term memory)
+.eval_agent_memory.json
+
 # Editors / OS
 .vscode/
 .idea/

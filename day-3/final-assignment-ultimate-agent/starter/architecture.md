@@ -37,6 +37,10 @@ flowchart TB
 
 ## Evaluation at a Glance
 
+Two offline evaluators run around a complete supervisor invocation. See
+[evaluation/README.md](evaluation/README.md) for the design, the dataset, and how to read the
+scorecard.
+
 ```mermaid
 flowchart LR
     Scenarios[(Evaluation scenarios)] --> Runner[Evaluation runner]
@@ -138,90 +142,14 @@ sequenceDiagram
     Supervisor-->>Customer: Recommended replacement and rationale
 ```
 
-## Evaluation Architecture
-
-The evaluators run offline around the complete supervisor invocation. They are not
-registered as agent tools and cannot influence a live customer conversation.
-
-```mermaid
-flowchart LR
-        Cases[(Evaluation cases<br/>customer questions)] --> Runner[Evaluation runner<br/>one fresh thread per case]
-        Runner -->|invoke| System[Supervisor and specialists]
-        System --> Result[Final answer and run trace]
-        Result --> ToolEval[Evaluator 1<br/>tool called before answer?]
-        Result --> AnswerEval[Evaluator 2<br/>answer outcome judge]
-        JudgeLLM[get_llm<br/>structured output] --> AnswerEval
-        ToolEval --> Report[(Per-case results<br/>and aggregate scorecard)]
-        AnswerEval --> Report
-```
-
-### Evaluator 1: tool called before the answer
-
-This evaluator should be deterministic; an LLM is unnecessary. It inspects the
-ordered supervisor messages or, preferably, the LangSmith run tree and returns:
-
-- `tool_called_before_answer`: `true` when at least one tool invocation starts
-    before the final customer-facing assistant message, otherwise `false`.
-- `tools_called`: the ordered tool names, such as `ask_order_desk`,
-    `get_order_status`, `ask_advisor`, or `compare_replacement_products`.
-
-Calls made by specialist agents count as tool calls. Evaluator/model calls do not.
-Using the run tree preserves nested calls that are hidden behind `ask_advisor` and
-`ask_order_desk`; inspecting only the final text would not provide reliable proof.
-The aggregate metric is the percentage of cases for which
-`tool_called_before_answer` is true. If the dataset later contains conversational
-messages that should not require a tool, add an `expects_tool_call` field and score
-whether actual usage matches that expectation rather than rewarding unnecessary
-tool calls.
-
-### Evaluator 2: customer-question outcome
-
-This evaluator uses an LLM judge with structured output. Its inputs are the
-original customer question and the final customer-facing answer. It returns exactly
-one label and a short rationale:
-
-| Label | Meaning |
-| --- | --- |
-| `ANSWERED` | The response directly and usefully addresses the customer's question. |
-| `NOT_ANSWERED` | The response evades, misunderstands, or leaves the question unresolved without a useful next step. |
-| `DIRECTED_TO_CUSTOMER_SERVICE` | Human customer service is presented as the primary next step because the agent cannot complete the request. |
-
-Use this precedence rule to keep labels mutually exclusive: choose
-`DIRECTED_TO_CUSTOMER_SERVICE` when escalation is the main resolution; otherwise
-choose `ANSWERED` when a substantive answer is present, even if customer service is
-mentioned as an optional fallback; choose `NOT_ANSWERED` for all remaining cases.
-An honest answer that a product or order cannot be found may still be `ANSWERED`
-when it explains the limitation and gives a relevant next step.
-
-The judge should use a typed schema, for example `label`, `rationale`, and
-`confidence`, rather than parsing free-form model text. This evaluator measures
-answer completion, not factual correctness; grounding or policy compliance would
-need separate evaluators.
-
-### Evaluation runner
-
-Implement the offline runner separately from `main.py`:
-
-- `evaluators.py` contains the deterministic trace evaluator, the answer-outcome
-    schema, and the LLM judge prompt.
-- `evaluate.py` loads the scenarios, invokes the supervisor with a unique
-    `thread_id` per case, runs both evaluators, and prints or saves the scorecard.
-- An evaluation dataset stores at least `case_id` and `customer_question`; optional
-    fields such as `expects_tool_call` and `notes` make results easier to interpret.
-
-The runner should report each case's tool names, Boolean tool result, outcome label,
-and judge rationale. Aggregate output should include the tool-call percentage and
-counts/percentages for all three outcome labels. Send target runs and judge runs to
-separate LangSmith projects or tags so evaluator model calls are never mistaken for
-customer-agent tool usage.
-
 ## Components
 
 ### Command-line interface
 
 `main.py` runs a synchronous read-evaluate-print loop. Every non-empty customer
-message is sent to the supervisor with the fixed LangGraph thread ID `demo`. The
-last message returned by the supervisor is printed as the CoolShop response.
+message is sent to the supervisor with one LangGraph thread ID generated per
+process start, so each run is a fresh conversation. The last message returned by
+the supervisor is printed as the CoolShop response.
 
 ### Supervisor
 
@@ -300,7 +228,9 @@ when the source data is edited; the current tools do not mutate webshop data.
 
 The file intentionally remains starter scaffolding. The order-desk and supervisor
 prompts still contain team TODOs. `compare_replacement_products` is implemented and
-registered with the product advisor. The two evaluators and evaluation runner
-described above are still planned rather than connected. No third specialist is
+registered with the product advisor. The two evaluators, the runner, and the
+evaluation dataset are implemented in the `evaluation/` folder; see
+[evaluation/README.md](evaluation/README.md). No third specialist is
 present. LangSmith tracing can observe LangChain calls when configured through the
-environment, but explicit observability setup is not part of `main.py`.
+environment, but explicit observability setup is not part of `main.py`; the
+evaluation runner adds its own tags, metadata, and separate judge project.

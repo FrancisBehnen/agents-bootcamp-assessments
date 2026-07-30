@@ -101,7 +101,10 @@ INFORMATION for the supervisor to resolve.
     product name is known, use search_products to find its catalog id. Call
     get_product_details for that source product before calling
     compare_replacement_products with its id and verified details. Then verify
-    promising replacement candidates with get_product_details.
+    promising replacement candidates with get_product_details. The comparison
+    tool does not rank candidates: compare the complete source and candidate
+    profiles yourself and explain which options are most similar. Do not assume
+    the first candidate is the closest match.
 - Treat tool output as the only source of truth. Never invent a product, price,
     stock level, rating, specification, compatibility claim, or comparison.
 - Respect every stated requirement as a hard constraint. If no product satisfies
@@ -159,8 +162,8 @@ def ask_advisor(request: str) -> str:
             and returns matching ids, prices, ratings, and stock levels.
         get_product_details: Retrieves verified specifications, price, stock,
             rating, and description for a specific catalog product.
-        compare_replacement_products: Ranks replacement candidates from the same
-            category by availability and similarity to the source product.
+        compare_replacement_products: Returns the verified source profile and
+            same-category candidate profiles for the advisor to compare.
 
     Args:
         request: A self-contained task written by the supervisor. Include the

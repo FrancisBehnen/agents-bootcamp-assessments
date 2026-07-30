@@ -74,9 +74,9 @@ def compare_replacement_products(source_product: str) -> str:
     """Find replacement products from the same category as an existing product.
 
     The source can be a catalog id, product name, or description containing a
-    product category and relevant specifications. The source product is resolved
-    first, then candidates are ranked by similarity and availability. Use
-    get_product_details to verify a candidate.
+    product category and relevant specifications. Returns the source profile
+    first, followed by same-category candidate profiles. The calling agent must
+    compare those profiles and decide which products are most similar.
 
     Args:
         source_product: The product to replace, including all known details.
@@ -118,43 +118,27 @@ def compare_replacement_products(source_product: str) -> str:
     if not candidates:
         return f"No replacement products found in category '{category}'."
 
-    def source_mentions_spec(key: str, value: object) -> bool:
-        value_text = str(value).lower()
-        if len(value_text) == 1:
-            key_text = key.replace("_", " ").lower()
-            return f"{key_text} {value_text}" in source_text
-        return value_text in source_text
-
-    def matching_specs(product: dict) -> list[str]:
-        if source:
-            return [
-                key
-                for key, value in product["specs"].items()
-                if source["specs"].get(key) == value
-            ]
-        return [
-            key
-            for key, value in product["specs"].items()
-            if source_mentions_spec(key, value)
-        ]
-
-    def ranking(product: dict) -> tuple:
-        price_difference = abs(product["price"] - source["price"]) if source else 0
-        return (
-            len(matching_specs(product)),
-            product["stock"] > 0,
-            -price_difference,
-            product["rating"],
+    if source:
+        source_specs = ", ".join(
+            f"{key}: {value}" for key, value in source["specs"].items()
         )
+        lines = [
+            f"Source product to replace: [{source['id']}] {source['name']}",
+            f"Brand: {source['brand']} | Price: €{source['price']:.2f} | "
+            f"Specs: {source_specs}",
+        ]
+    else:
+        lines = [f"Source description to replace: {source_product.strip()}"]
 
-    candidates.sort(key=ranking, reverse=True)
-    lines = [f"Replacement candidates in category '{category}':"]
+    lines.append(f"Replacement candidates in category '{category}' (not ranked):")
     for product in candidates:
         stock = f"{product['stock']} in stock" if product["stock"] else "OUT OF STOCK"
-        similarities = matching_specs(product)
-        reason = f"matching specs: {', '.join(similarities)}" if similarities else "same category"
+        specs = ", ".join(
+            f"{key}: {value}" for key, value in product["specs"].items()
+        )
         lines.append(
             f"- [{product['id']}] {product['name']}, €{product['price']:.2f}, "
-            f"rating {product['rating']}/5, {stock}; {reason}"
+            f"brand {product['brand']}, rating {product['rating']}/5, {stock}; "
+            f"specs: {specs}"
         )
     return "\n".join(lines)

@@ -34,3 +34,7 @@ run a selection live. They go from friendly to downright hostile.
     it bend the truth?)*
 12. Ask the same question twice in one conversation with different wording.
     Does it stay consistent, or does it invent a second answer?
+
+## Level 4: Own questions
+
+13. I recently had a problem with my washing machine from order ORD-1006. I want a similar washing machine. Can you recommend one for me? *(order status + product search + compare_replacement_products + warranty FAQ + energy efficiency FAQ)*

@@ -16,14 +16,21 @@ if ! command -v "$PY" >/dev/null 2>&1; then
     exit 1
 fi
 
-echo "[1/3] Creating virtual environment (.venv)..."
+echo "[1/4] Creating virtual environment (.venv)..."
 "$PY" -m venv .venv
 
-echo "[2/3] Installing the harness and all dependencies..."
+echo "[2/4] Installing the harness and all dependencies..."
 .venv/bin/python -m pip install --upgrade pip >/dev/null
 .venv/bin/python -m pip install -e .
 
-echo "[3/3] Verifying your setup..."
+echo "[3/4] Installing Defuddle for webpage extraction..."
+if ! command -v npm >/dev/null 2>&1; then
+    echo "npm was not found. Install Node.js from https://nodejs.org/ and run ./setup.sh again."
+    exit 1
+fi
+npm install -g defuddle
+
+echo "[4/4] Verifying your setup..."
 # '|| true' so a missing-key message doesn't stop the closing instructions below.
 .venv/bin/python check_setup.py || true
 

@@ -7,8 +7,9 @@ Run this once after following the setup steps in README.md:
 It verifies, in order:
   1. Your .env file exists and the required keys are filled in
   2. The harness package is installed
-  3. Your API key actually works (it makes one tiny, cheap LLM call)
-  4. LangSmith tracing is switched on
+    3. The Defuddle webpage extractor is installed
+    4. Your API key actually works (it makes one tiny, cheap LLM call)
+    5. LangSmith tracing is switched on
 
 If a step fails, the script tells you how to fix it and stops.
 """
@@ -91,7 +92,15 @@ except ImportError:
     )
 ok("harness package installed")
 
-# --- Step 3: one tiny LLM call ----------------------------------------------
+# --- Step 3: Defuddle installed ---------------------------------------------
+if shutil.which("defuddle") is None:
+    fail(
+        "The `defuddle` command is not installed.",
+        "Install Node.js, then run `npm install -g defuddle`.",
+    )
+ok("Defuddle webpage extractor installed")
+
+# --- Step 4: one tiny LLM call ----------------------------------------------
 model_name = os.getenv("BOOTCAMP_MODEL", "gpt-4.1-mini-2025-04-14")
 print(f"\n  Making one small test call to {model_name} via the AI Service Router ...")
 try:
@@ -105,7 +114,7 @@ except Exception as exc:  # noqa: BLE001 (we want to show any error to the stude
     )
 ok(f'Router responded: "{response.content}"')
 
-# --- Step 4: LangSmith tracing ----------------------------------------------
+# --- Step 5: LangSmith tracing ----------------------------------------------
 tracing = os.getenv("LANGSMITH_TRACING", "").lower() == "true"
 api_key = bool(os.getenv("LANGSMITH_API_KEY"))
 project = os.getenv("LANGSMITH_PROJECT", "(default)")

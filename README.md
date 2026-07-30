@@ -81,8 +81,9 @@ answer; the discussion is where the learning happens.
 ## Setup ⚙️
 
 > Do this before Day 1. It takes about 10 minutes. First install **Python 3.10
-> or newer** from [python.org](https://www.python.org/downloads/). On Windows,
-> tick **"Add python.exe to PATH"** in the installer.
+> or newer** from [python.org](https://www.python.org/downloads/) and **Node.js**
+> from [nodejs.org](https://nodejs.org/). On Windows, tick **"Add python.exe to
+> PATH"** in the Python installer.
 
 **1. Get the code:**
 
@@ -120,6 +121,7 @@ on macOS / Linux.
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
+npm install -g defuddle
 python check_setup.py
 ```
 
@@ -129,6 +131,7 @@ python check_setup.py
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
+npm install -g defuddle
 python check_setup.py
 ```
 
@@ -203,7 +206,7 @@ They run on mock data, so no external accounts are needed and nothing can break:
 | 📖 `search_faq(question)` | Searches store policies (returns, delivery, warranty) | Days 2 to 3 |
 | 📔 `save_note(note)` / `read_notes()` | Simple long-term memory on disk | Day 2 |
 | 🧩 `list_skills()` / `read_skill(name)` | Discover and load "skill" instruction files | Day 2 |
-| 🌐 `fetch_webpage(url)` | Downloads a webpage as readable text | Days 2 to 3 |
+| 🌐 `fetch_webpage(url)` | Extracts a webpage as readable Markdown with Defuddle | Days 2 to 3 |
 
 Import them like this:
 

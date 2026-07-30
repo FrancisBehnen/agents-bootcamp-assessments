@@ -18,14 +18,22 @@ if not defined PYCMD (
   exit /b 1
 )
 
-echo [1/3] Creating virtual environment (.venv)...
+echo [1/4] Creating virtual environment (.venv)...
 %PYCMD% -m venv .venv || goto :fail
 
-echo [2/3] Installing the harness and all dependencies...
+echo [2/4] Installing the harness and all dependencies...
 ".venv\Scripts\python.exe" -m pip install --upgrade pip >nul
 ".venv\Scripts\python.exe" -m pip install -e . || goto :fail
 
-echo [3/3] Verifying your setup...
+echo [3/4] Installing Defuddle for webpage extraction...
+where npm >nul 2>nul
+if errorlevel 1 (
+  echo npm was not found. Install Node.js from https://nodejs.org/ and run setup.bat again.
+  goto :fail
+)
+call npm install -g defuddle || goto :fail
+
+echo [4/4] Verifying your setup...
 ".venv\Scripts\python.exe" check_setup.py
 
 echo.

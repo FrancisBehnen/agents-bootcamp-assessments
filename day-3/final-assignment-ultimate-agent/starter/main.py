@@ -70,6 +70,10 @@ advisor_agent = create_agent(
 def ask_advisor(request: str) -> str:
     """Ask the product advisor to help with product choice or product advice.
 
+    The advisor can search products using `search_products`, retrieve verified
+    details using `get_product_details`, and compare replacement products using
+    `compare_replacement_products`.
+
     Args:
         request: The customer's need, with all relevant details you know
             (budget, use case, preferences).
@@ -98,6 +102,9 @@ order_desk_agent = create_agent(
 @tool
 def ask_order_desk(request: str) -> str:
     """Ask the order desk about order status, delivery, returns or store policy.
+
+    The order desk can look up order status using `get_order_status` and search
+    CoolShop policies using `search_faq`.
 
     Args:
         request: The customer's question, including the order number if known.

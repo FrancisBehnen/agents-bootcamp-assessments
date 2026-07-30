@@ -37,4 +37,4 @@ run a selection live. They go from friendly to downright hostile.
 
 ## Level 4: Own questions
 
-13. I recently had a problem with my washing machine from order ORD-1006. I want a similar washing machine. Can you recommend one for me? *(order status + product search + compare_replacement_products + warranty FAQ + energy efficiency FAQ)*
+13. I recently had a problem with my washing machine from order ORD-1006. I want a similar washing machine. Can you recommend one for me? *(order status + product search + compare_replacement_products)*

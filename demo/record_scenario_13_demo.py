@@ -52,9 +52,9 @@ SAMPLE = [
     ("          48 dB versus 47 dB. It costs EUR 649 and is in stock.", 18),
 ]
 
-APPEAR_MS = 360
-HOLD_UNIT_MS = 250
-FINAL_HOLD_MS = 8000
+APPEAR_MS = 300
+HOLD_UNIT_MS = 210
+FINAL_HOLD_MS = 6500
 
 
 def _render_trace(lines: list[str]):

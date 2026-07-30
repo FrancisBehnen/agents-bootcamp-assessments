@@ -14,7 +14,7 @@ flowchart TB
     Supervisor <--> OrderDesk[Order desk]
 
     subgraph Harness[Shared harness]
-        ProductTools[Product tools<br/>search_products<br/>get_product_details<br/>compare_replacement_products planned]
+        ProductTools[Product tools<br/>search_products<br/>get_product_details<br/>compare_replacement_products]
         ServiceTools[Service tools<br/>get_order_status<br/>search_faq]
         MemoryTools[Memory tools<br/>save_note<br/>read_notes]
         OtherTools[Other implemented tools<br/>calculator<br/>get_weather<br/>fetch_webpage<br/>list_skills<br/>read_skill]
@@ -75,7 +75,7 @@ flowchart TB
         subgraph WebshopTools[Webshop tools]
             SearchProducts[search_products]
             ProductDetails[get_product_details]
-            CompareProducts[compare_replacement_products<br/>planned custom tool]
+            CompareProducts[compare_replacement_products<br/>custom tool]
             OrderStatus[get_order_status]
             SearchFAQ[search_faq]
         end
@@ -246,7 +246,7 @@ the missing product.
 ### Specialist agents
 
 The product advisor can call `search_products`, `get_product_details`, and the
-planned custom tool `compare_replacement_products`. Search supports progressive
+custom tool `compare_replacement_products`. Search supports progressive
 disclosure by returning compact catalog results before the agent requests complete
 specifications for a selected product.
 
@@ -274,9 +274,8 @@ The shared `harness` package supplies infrastructure used by the agents:
 - `harness.llm.get_llm` loads the repository `.env`, selects `BOOTCAMP_MODEL`,
   and creates a `ChatOpenAI` client for the Coolblue AI Service Router.
 - `harness.tools` exports LangChain tools and themed bundles. The starter imports
-    the four existing webshop tools directly and expands `MEMORY_TOOLS` for the
-    supervisor. The comparison tool is planned and must be added to this package or
-    an application-owned tools module before it can be attached to the advisor.
+    the five webshop tools directly and expands `MEMORY_TOOLS` for the supervisor.
+    The comparison tool is included in `WEBSHOP_TOOLS` and attached to the advisor.
 - `harness.data` contains the in-process `PRODUCTS`, `ORDERS`, and `FAQ` fixtures
   read by the webshop tools. No external commerce service is called.
 - `harness.tools.memory` stores long-term notes in `.agent_memory.json` relative
@@ -299,9 +298,9 @@ when the source data is edited; the current tools do not mutate webshop data.
 
 ## Current Extension Points
 
-The file intentionally remains starter scaffolding. Prompts still contain team
-TODOs, and `compare_replacement_products` is an architectural addition that is not
-yet implemented or registered with the product advisor. The two evaluators and
-evaluation runner described above are also planned rather than connected. No third
-specialist is present. LangSmith tracing can observe LangChain calls when configured
-through the environment, but explicit observability setup is not part of `main.py`.
+The file intentionally remains starter scaffolding. The order-desk and supervisor
+prompts still contain team TODOs. `compare_replacement_products` is implemented and
+registered with the product advisor. The two evaluators and evaluation runner
+described above are still planned rather than connected. No third specialist is
+present. LangSmith tracing can observe LangChain calls when configured through the
+environment, but explicit observability setup is not part of `main.py`.

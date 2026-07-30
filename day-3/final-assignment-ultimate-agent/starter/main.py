@@ -28,6 +28,7 @@ from uuid import uuid4
 from harness import get_llm
 from harness.tools import (
     MEMORY_TOOLS,
+    compare_replacement_products,
     get_order_status,
     get_product_details,
     search_faq,
@@ -42,12 +43,26 @@ from harness.tools import (
 # behaviour. Note it has no memory and no order tools, because that is not its job.
 advisor_agent = create_agent(
     model=get_llm(),
-    tools=[search_products, get_product_details],
+    tools=[search_products, get_product_details, compare_replacement_products],
     system_prompt=(
-        "You are CoolShop's product advisor. You help customers choose "
-        "products using your search and detail tools, never from memory. "
-        "Be concrete and honest; if nothing fits, say so. "
-        "TODO(team): make this prompt your own (use your day-2 work!)."
+        "You are CoolShop's product advisor. Your only job is helping customers "
+        "choose the product that best fits their needs.\n\n"
+        "TOOLS\n"
+        "Use these tools as the only source of truth for product facts:\n"
+        "  - search_products(query) -> matching products\n"
+        "  - get_product_details(product_id) -> verified product information\n"
+        "  - compare_replacement_products(source_product) -> ranked replacements "
+        "from the same category\n\n"
+        "WORKFLOW\n"
+        "For a new product, identify the needs and budget, search for candidates, "
+        "and verify promising products with get_product_details. For a replacement, "
+        "use compare_replacement_products first and verify the best candidates with "
+        "get_product_details. Ask one focused question when essential information "
+        "is missing.\n\n"
+        "RULES\n"
+        "Never invent product facts. Respect every stated requirement. If nothing "
+        "fits, say so clearly and present alternatives only as compromises. Keep "
+        "the answer concrete, concise and honest."
     ),
 )
 
@@ -55,6 +70,10 @@ advisor_agent = create_agent(
 @tool
 def ask_advisor(request: str) -> str:
     """Ask the product advisor to help with product choice or product advice.
+
+    The advisor can search products using `search_products`, retrieve verified
+    details using `get_product_details`, and compare replacement products using
+    `compare_replacement_products`.
 
     Args:
         request: The customer's need, with all relevant details you know
@@ -84,6 +103,9 @@ order_desk_agent = create_agent(
 @tool
 def ask_order_desk(request: str) -> str:
     """Ask the order desk about order status, delivery, returns or store policy.
+
+    The order desk can look up order status using `get_order_status` and search
+    CoolShop policies using `search_faq`.
 
     Args:
         request: The customer's question, including the order number if known.

@@ -9,7 +9,7 @@ come up with good test questions for your agent.
 """
 
 # --- Products ----------------------------------------------------------------
-# A dozen products across a few categories. Each product is a plain dict.
+# Products across a few categories. Each product is a plain dict.
 PRODUCTS = [
     {
         "id": "P-1001",
@@ -111,6 +111,72 @@ PRODUCTS = [
         "highlight": "Compact machine for singles or couples with less space.",
     },
     {
+        "id": "P-4003",
+        "name": "AquaCare EcoWash 900",
+        "brand": "AquaCare",
+        "category": "washing machines",
+        "price": 729.00,
+        "stock": 18,
+        "rating": 4.7,
+        "specs": {"capacity": "9 kg", "energy_label": "A", "noise": "47 dB", "rpm": "1400"},
+        "highlight": "Energy-efficient family washer with a quiet night program.",
+    },
+    {
+        "id": "P-4004",
+        "name": "HomeFlow MiniWash 500",
+        "brand": "HomeFlow",
+        "category": "washing machines",
+        "price": 389.00,
+        "stock": 26,
+        "rating": 4.1,
+        "specs": {"capacity": "5 kg", "energy_label": "C", "noise": "55 dB", "rpm": "1000"},
+        "highlight": "Space-saving washer designed for studios and small households.",
+    },
+    {
+        "id": "P-4005",
+        "name": "NordClean SteamPro 10",
+        "brand": "NordClean",
+        "category": "washing machines",
+        "price": 899.00,
+        "stock": 9,
+        "rating": 4.8,
+        "specs": {"capacity": "10 kg", "energy_label": "A", "noise": "46 dB", "rpm": "1600"},
+        "highlight": "Large-capacity washer with steam cleaning for busy families.",
+    },
+    {
+        "id": "P-4006",
+        "name": "PureDrum Daily 700",
+        "brand": "PureDrum",
+        "category": "washing machines",
+        "price": 519.00,
+        "stock": 34,
+        "rating": 4.4,
+        "specs": {"capacity": "7 kg", "energy_label": "B", "noise": "50 dB", "rpm": "1400"},
+        "highlight": "Reliable everyday washer with quick cycles for smaller loads.",
+    },
+    {
+        "id": "P-4007",
+        "name": "AquaCare SilentWash 800",
+        "brand": "AquaCare",
+        "category": "washing machines",
+        "price": 679.00,
+        "stock": 0,
+        "rating": 4.5,
+        "specs": {"capacity": "8 kg", "energy_label": "A", "noise": "44 dB", "rpm": "1400"},
+        "highlight": "Extra-quiet washing for open-plan homes and nighttime cycles.",
+    },
+    {
+        "id": "P-4008",
+        "name": "MaxLoad Active 12",
+        "brand": "MaxLoad",
+        "category": "washing machines",
+        "price": 999.00,
+        "stock": 5,
+        "rating": 4.6,
+        "specs": {"capacity": "12 kg", "energy_label": "A", "noise": "49 dB", "rpm": "1600"},
+        "highlight": "High-capacity machine for large households and bulky laundry.",
+    },
+    {
         "id": "P-5001",
         "name": "BeanBoss Barista Deluxe",
         "brand": "BeanBoss",
@@ -187,6 +253,14 @@ ORDERS = {
         "status": "return received",
         "ordered_on": "2026-06-10",
         "note": "Return received on 2026-06-20. Refund will be processed within 5 working days.",
+    },
+    "ORD-1006": {
+        "customer": "Noah de Boer",
+        "items": ["AquaCare EcoWash 900"],
+        "status": "delivered",
+        "ordered_on": "2026-07-02",
+        "delivered_on": "2026-07-05",
+        "note": "Signed for at the front door.",
     },
 }
 

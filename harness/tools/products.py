@@ -67,3 +67,93 @@ def get_product_details(product_id: str) -> str:
                 f"In short: {p['highlight']}"
             )
     return f"No product found with id '{product_id}'. Use search_products to find valid ids."
+
+
+@tool
+def compare_replacement_products(source_product: str) -> str:
+    """Find replacement products from the same category as an existing product.
+
+    The source can be a catalog id, product name, or description containing a
+    product category and relevant specifications. Candidates are ranked by
+    availability and similarity. Use get_product_details to verify a candidate.
+
+    Args:
+        source_product: The product to replace, including all known details.
+    """
+    source_text = source_product.strip().lower()
+    source = next(
+        (
+            product
+            for product in PRODUCTS
+            if product["id"].lower() in source_text
+            or product["name"].lower() in source_text
+        ),
+        None,
+    )
+
+    categories = sorted({product["category"] for product in PRODUCTS})
+    category = source["category"] if source else next(
+        (
+            candidate
+            for candidate in categories
+            if candidate.lower() in source_text
+            or candidate.lower().removesuffix("s") in source_text
+        ),
+        None,
+    )
+
+    if category is None:
+        return (
+            "Could not determine the source product category. Provide a product "
+            f"id, product name, or category. Available categories: {', '.join(categories)}."
+        )
+
+    candidates = [
+        product
+        for product in PRODUCTS
+        if product["category"] == category
+        and (source is None or product["id"] != source["id"])
+    ]
+    if not candidates:
+        return f"No replacement products found in category '{category}'."
+
+    def source_mentions_spec(key: str, value: object) -> bool:
+        value_text = str(value).lower()
+        if len(value_text) == 1:
+            key_text = key.replace("_", " ").lower()
+            return f"{key_text} {value_text}" in source_text
+        return value_text in source_text
+
+    def matching_specs(product: dict) -> list[str]:
+        if source:
+            return [
+                key
+                for key, value in product["specs"].items()
+                if source["specs"].get(key) == value
+            ]
+        return [
+            key
+            for key, value in product["specs"].items()
+            if source_mentions_spec(key, value)
+        ]
+
+    def ranking(product: dict) -> tuple:
+        price_difference = abs(product["price"] - source["price"]) if source else 0
+        return (
+            product["stock"] > 0,
+            len(matching_specs(product)),
+            -price_difference,
+            product["rating"],
+        )
+
+    candidates.sort(key=ranking, reverse=True)
+    lines = [f"Replacement candidates in category '{category}':"]
+    for product in candidates:
+        stock = f"{product['stock']} in stock" if product["stock"] else "OUT OF STOCK"
+        similarities = matching_specs(product)
+        reason = f"matching specs: {', '.join(similarities)}" if similarities else "same category"
+        lines.append(
+            f"- [{product['id']}] {product['name']}, €{product['price']:.2f}, "
+            f"rating {product['rating']}/5, {stock}; {reason}"
+        )
+    return "\n".join(lines)

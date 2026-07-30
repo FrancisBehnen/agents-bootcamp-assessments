@@ -10,6 +10,9 @@ a short recording of the agent loop (think, call a tool, answer).
 | `demo_agent.py` | A finished, working agent (weather + calculator). No TODOs, it just runs. |
 | `record_demo.py` | Renders the run to a GIF using only Python + Pillow. No `vhs`, no `brew`, no `ffmpeg`. |
 | `agent-demo.gif` | The generated recording, shown in the main README. |
+| `scenario_13_demo.py` | Runs mystery-shopper scenario 13 through the Ultimate Agent supervisor. |
+| `record_scenario_13_demo.py` | Renders the scenario 13 supervisor flow as a separate GIF. |
+| `scenario-13-agent-demo.gif` | Animated scenario 13 demo with order desk, advisor, and tone skill calls. |
 
 ## Regenerate the GIF
 
@@ -23,6 +26,12 @@ python demo/record_demo.py
 
 That writes `demo/agent-demo.gif`. It uses a built-in sample transcript, so it
 needs no API keys: anyone can regenerate it.
+
+Generate the separate scenario 13 demo with:
+
+```bash
+python demo/record_scenario_13_demo.py
+```
 
 Want the GIF to capture a **real** agent run instead of the sample?
 

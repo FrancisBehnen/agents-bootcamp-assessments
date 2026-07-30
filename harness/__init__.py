@@ -16,6 +16,7 @@ Typical usage in an assignment:
     from harness.tools import get_weather, calculator
 """
 
+from harness.agent import create_agent
 from harness.llm import get_llm
 
-__all__ = ["get_llm"]
+__all__ = ["create_agent", "get_llm"]

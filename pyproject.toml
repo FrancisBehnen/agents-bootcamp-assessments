@@ -15,8 +15,7 @@ dependencies = [
     "langsmith>=0.3",        # tracing & observability (you know this from the Evaluation day!)
     # Small utilities used by the harness tools.
     "python-dotenv>=1.0",    # loads your .env file with API keys
-    "requests>=2.31",        # for the fetch_webpage tool
-    "beautifulsoup4>=4.12",  # turns HTML pages into readable text
+    "requests>=2.31",        # downloads raw Markdown pages
     "pillow>=10.0",          # renders the demo GIF (see demo/record_demo.py)
 ]
 

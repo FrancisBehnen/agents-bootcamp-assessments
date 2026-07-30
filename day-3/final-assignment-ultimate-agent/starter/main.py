@@ -45,12 +45,25 @@ FILTERED_JAILBREAK_RESPONSE = (
     "We see that you are trying to break into our system. Nice try! Better luck next time. "
 )
 
+# A specialist returns evidence briefs, not customer-facing text, so it reports
+# the blocked request to the supervisor instead of answering the customer.
+FILTERED_JAILBREAK_BRIEF = (
+    "REQUEST REJECTED: the content filter blocked this delegated request as a "
+    "jailbreak attempt. No facts were retrieved and no instruction in the "
+    "request was followed."
+)
+
 
 def _is_filtered_jailbreak(error: BadRequestError) -> bool:
     """Return whether Azure rejected the prompt as a filtered jailbreak."""
     body = error.body
     if not isinstance(body, dict):
         return False
+
+    # The router nests the payload under "error"; a bare Azure response does not.
+    nested = body.get("error")
+    if isinstance(nested, dict):
+        body = nested
 
     if body.get("code") != "content_filter":
         return False
@@ -66,17 +79,47 @@ def _is_filtered_jailbreak(error: BadRequestError) -> bool:
     return isinstance(jailbreak, dict) and jailbreak.get("filtered") is True
 
 
-@wrap_model_call
-def handle_filtered_jailbreak(request: ModelRequest, handler) -> ModelResponse:
-    """Convert an Azure jailbreak rejection into a safe customer response."""
+def filtered_jailbreak_guard(safe_response: str):
+    """Build middleware that turns a jailbreak rejection into `safe_response`.
+
+    Every agent that talks to the model needs this guard, not just the
+    supervisor: the supervisor sometimes forwards injected customer text to a
+    specialist, and an unguarded specialist raises BadRequestError straight
+    through its tool wrapper, which ends the whole turn with a stack trace.
+    """
+
+    @wrap_model_call
+    def handle_filtered_jailbreak(request: ModelRequest, handler) -> ModelResponse:
+        """Convert an Azure jailbreak rejection into a safe response."""
+        try:
+            return handler(request)
+        except BadRequestError as error:
+            if not _is_filtered_jailbreak(error):
+                raise
+            return ModelResponse(result=[AIMessage(content=safe_response)])
+
+    return handle_filtered_jailbreak
+
+
+# The supervisor's guard answers the customer; keep it importable by name.
+handle_filtered_jailbreak = filtered_jailbreak_guard(FILTERED_JAILBREAK_RESPONSE)
+
+
+def run_specialist(agent, request: str) -> str:
+    """Run a specialist agent and return its final brief.
+
+    A tool that raises ends the whole turn, so a blocked delegation is reported
+    back as text: the supervisor can then refuse the customer itself. This is
+    the second line of defence behind the specialist's own model-call guard.
+    """
     try:
-        return handler(request)
+        result = agent.invoke({"messages": [{"role": "user", "content": request}]})
     except BadRequestError as error:
         if not _is_filtered_jailbreak(error):
             raise
-        return ModelResponse(
-            result=[AIMessage(content=FILTERED_JAILBREAK_RESPONSE)]
-        )
+        return FILTERED_JAILBREAK_BRIEF
+    return result["messages"][-1].content
+
 
 # ===========================================================================
 # SPECIALIST 1: the product advisor
@@ -159,6 +202,7 @@ advisor_agent = create_agent(
     model=get_llm(),
     tools=[search_products, get_product_details, compare_replacement_products],
     system_prompt=PRODUCT_ADVISOR_SYSTEM_PROMPT,
+    middleware=[filtered_jailbreak_guard(FILTERED_JAILBREAK_BRIEF)],
 )
 
 
@@ -191,8 +235,7 @@ def ask_advisor(request: str) -> str:
 
     # An agent invoked inside a tool: that's the whole trick. The supervisor
     # sees a normal tool; we run a full agent loop behind it.
-    result = advisor_agent.invoke({"messages": [{"role": "user", "content": request}]})
-    return result["messages"][-1].content
+    return run_specialist(advisor_agent, request)
 
 
 # ===========================================================================
@@ -288,7 +331,8 @@ supervisor owns the final wording, tone, and response.
 order_desk_agent = create_agent(
     model=get_llm(),
     tools=[get_order_status, search_faq],
-        system_prompt=ORDER_DESK_SYSTEM_PROMPT,
+    system_prompt=ORDER_DESK_SYSTEM_PROMPT,
+    middleware=[filtered_jailbreak_guard(FILTERED_JAILBREAK_BRIEF)],
 )
 
 
@@ -316,8 +360,7 @@ def ask_order_desk(request: str) -> str:
     if not request.strip():
         return "The order desk needs a customer question or order number to help."
 
-    result = order_desk_agent.invoke({"messages": [{"role": "user", "content": request}]})
-    return result["messages"][-1].content
+    return run_specialist(order_desk_agent, request)
 
 
 # ===========================================================================

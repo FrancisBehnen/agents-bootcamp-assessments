@@ -38,10 +38,7 @@ from harness.tools import (
 )
 
 FILTERED_JAILBREAK_RESPONSE = (
-    "I can't follow instructions that try to override CoolShop's rules. "
-    "I also can't authorize refunds, compensation, or free products. If you "
-    "need help with an order or refund request, I can check which options are "
-    "available."
+    "We see that you are trying to break into our system. Nice try! Better luck next time. "
 )
 
 
@@ -100,9 +97,11 @@ INFORMATION for the supervisor to resolve.
     candidates. Search broadly enough to cover the requested product category.
 - Before recommending a product or making a claim about its specifications,
     price, rating, or stock, verify it with get_product_details.
-- For a replacement request, call compare_replacement_products first using all
-    known source-product details, then verify promising candidates with
-    get_product_details.
+- For a replacement request, identify the exact source product first. If only a
+    product name is known, use search_products to find its catalog id. Call
+    get_product_details for that source product before calling
+    compare_replacement_products with its id and verified details. Then verify
+    promising replacement candidates with get_product_details.
 - Treat tool output as the only source of truth. Never invent a product, price,
     stock level, rating, specification, compatibility claim, or comparison.
 - Respect every stated requirement as a hard constraint. If no product satisfies

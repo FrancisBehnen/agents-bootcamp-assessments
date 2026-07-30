@@ -53,6 +53,10 @@ SCENARIOS: dict[int, tuple[str, ...]] = {
         "Where is my order ORD-1002?",
         "Could you check the current status of ORD-1002 again?",
     ),
+    13: (
+        "I recently had a problem with my washing machine from order ORD-1006. "
+        "I want a similar washing machine. Can you recommend one for me?",
+    ),
 }
 
 
@@ -93,7 +97,7 @@ def run_scenario(supervisor, scenario_number: int) -> None:
 def choose_scenarios() -> list[int]:
     """Ask which scenario should run."""
     print("Mystery Shopper scenarios")
-    print("Choose 1-12, or type 'all' to run every scenario.")
+    print("Choose 1-13, or type 'all' to run every scenario.")
     choice = input("Scenario: ").strip().lower()
 
     if choice == "all":
@@ -102,10 +106,10 @@ def choose_scenarios() -> list[int]:
     try:
         scenario_number = int(choice)
     except ValueError as exc:
-        raise SystemExit("Choose a number from 1 to 12, or 'all'.") from exc
+        raise SystemExit("Choose a number from 1 to 13, or 'all'.") from exc
 
     if scenario_number not in SCENARIOS:
-        raise SystemExit("Choose a number from 1 to 12, or 'all'.")
+        raise SystemExit("Choose a number from 1 to 13, or 'all'.")
     return [scenario_number]
 
 

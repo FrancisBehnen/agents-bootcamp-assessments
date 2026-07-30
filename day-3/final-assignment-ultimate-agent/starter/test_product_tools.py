@@ -14,6 +14,13 @@ def test_known_product_returns_only_other_products_from_same_category():
     assert "washing machines" in result
 
 
+def test_known_product_ranks_similarity_before_availability():
+    result = compare("P-4001")
+
+    assert result.index("P-4007") < result.index("P-4003")
+    assert "P-4007" in result and "OUT OF STOCK" in result
+
+
 def test_external_product_specs_rank_the_closest_available_match_first():
     result = compare("AEG washing machine, 8 kg, energy label A")
 

@@ -74,8 +74,9 @@ def compare_replacement_products(source_product: str) -> str:
     """Find replacement products from the same category as an existing product.
 
     The source can be a catalog id, product name, or description containing a
-    product category and relevant specifications. Candidates are ranked by
-    availability and similarity. Use get_product_details to verify a candidate.
+    product category and relevant specifications. The source product is resolved
+    first, then candidates are ranked by similarity and availability. Use
+    get_product_details to verify a candidate.
 
     Args:
         source_product: The product to replace, including all known details.
@@ -140,8 +141,8 @@ def compare_replacement_products(source_product: str) -> str:
     def ranking(product: dict) -> tuple:
         price_difference = abs(product["price"] - source["price"]) if source else 0
         return (
-            product["stock"] > 0,
             len(matching_specs(product)),
+            product["stock"] > 0,
             -price_difference,
             product["rating"],
         )

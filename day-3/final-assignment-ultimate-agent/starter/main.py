@@ -20,8 +20,11 @@ Run it:
     python main.py
 """
 
+from langchain.agents.middleware import ModelRequest, ModelResponse, wrap_model_call
 from langchain.tools import tool
+from langchain_core.messages import AIMessage
 from langgraph.checkpoint.memory import InMemorySaver
+from openai import BadRequestError
 from uuid import uuid4
 
 from harness import create_agent, get_llm
@@ -33,6 +36,46 @@ from harness.tools import (
     search_faq,
     search_products,
 )
+
+FILTERED_JAILBREAK_RESPONSE = (
+    "I can't follow instructions that try to override CoolShop's rules. "
+    "I also can't authorize refunds, compensation, or free products. If you "
+    "need help with an order or refund request, I can check which options are "
+    "available."
+)
+
+
+def _is_filtered_jailbreak(error: BadRequestError) -> bool:
+    """Return whether Azure rejected the prompt as a filtered jailbreak."""
+    body = error.body
+    if not isinstance(body, dict):
+        return False
+
+    if body.get("code") != "content_filter":
+        return False
+
+    inner_error = body.get("innererror")
+    if not isinstance(inner_error, dict):
+        return False
+    filter_result = inner_error.get("content_filter_result")
+    if not isinstance(filter_result, dict):
+        return False
+    jailbreak = filter_result.get("jailbreak")
+
+    return isinstance(jailbreak, dict) and jailbreak.get("filtered") is True
+
+
+@wrap_model_call
+def handle_filtered_jailbreak(request: ModelRequest, handler) -> ModelResponse:
+    """Convert an Azure jailbreak rejection into a safe customer response."""
+    try:
+        return handler(request)
+    except BadRequestError as error:
+        if not _is_filtered_jailbreak(error):
+            raise
+        return ModelResponse(
+            result=[AIMessage(content=FILTERED_JAILBREAK_RESPONSE)]
+        )
 
 # ===========================================================================
 # SPECIALIST 1: the product advisor
@@ -327,6 +370,7 @@ supervisor = create_agent(
     tools=[ask_advisor, ask_order_desk, *MEMORY_TOOLS],
     system_prompt=SYSTEM_PROMPT,
     developer_message=DEVELOPER_MESSAGE,
+    middleware=[handle_filtered_jailbreak],
     checkpointer=InMemorySaver(),  # the supervisor holds the conversation memory
 )
 

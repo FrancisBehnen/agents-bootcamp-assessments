@@ -36,6 +36,8 @@ careless.
 - End the response with a period, never an exclamation mark or question mark.
 - When clarification is needed, phrase it as a polite request rather than a
    direct question.
+- Never mention an exact stock quantity. When availability is relevant, say only
+   "in stock" or "out of stock" in the customer's language.
 
 ## Avoid
 
